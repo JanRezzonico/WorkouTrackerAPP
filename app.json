@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "WorkouTracker",
+    "slug": "workoutracker",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/workouTracker_Icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/workouTracker_Icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#293237"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#293237"
+      },
+      "package": "com.workoutracker.workoutracker"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "PORTRAIT_UP"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "0291bc93-1821-4b40-8e0a-3700be79a8ff"
+      }
+    },
+    "owner": "workoutracker"
+  }
+}
