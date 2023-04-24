@@ -70,7 +70,7 @@ function App() {
     
     <NavigationContainer initialRouteName={initialRoute}>
       {initialRoute === 'WelcomeView' ? (
-        <WelcomeView />
+        <WelcomeView onLogin={()=>{setInitialRoute('TabMenu')}} />
       ) : (
         <TabMenu />
       )}

@@ -32,11 +32,11 @@ function ProfileView(props) {
             <ScrollView>
                 <View style={styles.container}>
                     <View style={styles.header}>
-                        <Image source={{ uri: '../assets/blank-profile-picture.png' }} style={styles.profileImg} />
+                        <Image source={require('../assets/blank-profile-picture.png')}  style={styles.profileImg} />
                         <Text style={styles.userName}>{user.username}</Text>
                     </View>
                     <View style={styles.contents}>
-                        <TouchableOpacity onPress={() => {setUserInfoModalVisible(true)}}>
+                        <TouchableOpacity onPress={() => { setUserInfoModalVisible(true) }}>
                             <Feather name="settings" style={styles.btnIcon} />
                         </TouchableOpacity>
                         <Modal
@@ -58,15 +58,17 @@ function ProfileView(props) {
                             <Text style={styles.displayedInfo}>{new Date(user.birthday).toLocaleDateString()}</Text>
                         </View>
                         <View style={styles.bottomCard}>
-                            <Text style={styles.labelInfo}>Height</Text>
-                            <View style={styles.horizontalContainer}>
-                                <Text style={styles.displayedInfo}>{user.height}</Text>
-                                <Text style={styles.displayedInfo}> cm</Text>
-                            </View>
-                            <Text style={styles.labelInfo}>Weight</Text>
-                            <View style={styles.horizontalContainer}>
-                                <Text style={styles.displayedInfo}>{user.weight}</Text>
-                                <Text style={styles.displayedInfo}> kg</Text>
+                            <View style={styles.info}>
+                                <Text style={styles.labelInfo}>Height</Text>
+                                <View style={styles.horizontalContainer}>
+                                    <Text style={styles.displayedInfo}>{user.height}</Text>
+                                    <Text style={styles.displayedInfo}> cm</Text>
+                                </View>
+                                <Text style={styles.labelInfo}>Weight</Text>
+                                <View style={styles.horizontalContainer}>
+                                    <Text style={styles.displayedInfo}>{user.weight}</Text>
+                                    <Text style={styles.displayedInfo}> kg</Text>
+                                </View>
                             </View>
                             {/* the component modal is used to show a pop-up when BMIButton is clicked*/}
                             <Modal
@@ -81,13 +83,7 @@ function ProfileView(props) {
                                     <View style={styles.popUp}>
                                         <BMIView weight={user.weight} height={user.height} />
                                         {/* Close pop-up button */}
-                                        {/* <TouchableOpacity style={styles.popUpButton}
-                                            onPress={
-                                                () => { setModalVisible(!modalVisible); }
-                                            }>
-                                            <Text style={styles.appButtonText}>Close</Text>
-                                        </TouchableOpacity> */}
-                                        <WTButton onPress={ () => { setModalVisible(!modalVisible); }} text={"Close"}></WTButton>
+                                        <WTButton onPress={() => { setModalVisible(!modalVisible); }} text={"Close"}></WTButton>
                                     </View>
                                 </View>
                             </Modal>
@@ -157,10 +153,12 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: normalMargin,
         paddingTop: 25,
-        paddingLeft: 20,
         borderColor: '#8c9596',
         borderWidth: 1,
         marginBottom: StatusBar.currentHeight,
+    },
+    info: {
+        paddingLeft: 20,
     },
     labelInfo: {
         fontSize: subTitleFont,

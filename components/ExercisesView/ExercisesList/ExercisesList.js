@@ -1,6 +1,6 @@
 import { Text, View, FlatList, StyleSheet, SectionList, Dimensions } from "react-native";
 import ExerciseListItem from "./ExerciseListItem";
-import { sectionize } from "./ExercisesListModel";
+import { sectionize } from "./Model";
 
 const renderItem = ({item}) => {
   return(
@@ -20,7 +20,6 @@ const renderSectionHeader = ({section}) => {
 }
 
 function ExercisesList(props) {
-  console.log(props.data);
   return (
     <View style={styles.mainContainer}>
       <SectionList

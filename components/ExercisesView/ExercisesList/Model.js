@@ -44,21 +44,17 @@ export const getDistinct = (propName) => {
 }
 
 export const filter = (filter) => {
-    console.log(filter);
-    const useSearchFilter = filter.search != '';
-    const useMusclesFilter = filter.muscles.value != 'All';
-    const useForceFilter = filter.force.value != 'All';
-    if (!useSearchFilter && !useMusclesFilter && !useForceFilter) { //Avoid useless looping if in the end you are not going to apply any change.
-        return global.exercises;
+    const useSearchFilter = filter.search !== '';
+    const useMusclesFilter = filter.muscles !== 'All';
+    const useForceFilter = filter.force !== 'All';
+    if (!useSearchFilter && !useMusclesFilter && !useForceFilter) {
+      // Return the original array if no filters are applied
+      return global.exercises;
     }
-    let newExercises = [];
-    for (const exercise of global.exercises) {
-        const search = exercise.name.includes(filter.search) || !useSearchFilter;
-        const muscles = exercise.primaryMuscles.includes(filter.muscles.value) || !useMusclesFilter;
-        const force = exercise.force == filter.force.value || !useForceFilter;
-        if (search && muscles && force) {
-            newExercises.push(exercise);
-        }
-    }
-    return newExercises;
+    return global.exercises.filter((exercise) => {
+      const search = exercise.name.toLowerCase().includes(filter.search.toLowerCase()) || !useSearchFilter;
+      const muscles = useMusclesFilter ? exercise.primaryMuscles.includes(filter.muscles) : true;
+      const force = exercise.force === filter.force || !useForceFilter;
+      return search && muscles && force;
+    });
 }

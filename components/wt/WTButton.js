@@ -1,4 +1,5 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import PropTypes from 'prop-types';
 
 const WTButton = ({text, onPress}) => {
     return (
@@ -7,6 +8,11 @@ const WTButton = ({text, onPress}) => {
         </TouchableOpacity>
     );
 }
+
+WTButton.propTypes = {
+    text: PropTypes.string.isRequired,
+    onPress: PropTypes.func.isRequired,
+};
 
 export default WTButton;
 

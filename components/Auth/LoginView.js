@@ -1,27 +1,22 @@
 import { useState } from 'react';
-import { Text, View, StyleSheet, Image, Dimensions, TextInput, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
-import DB from '../api/api';
-import colors from '../assets/style/colors';
-import TabMenu from './TabMenu';
-import WTButton from './wt/WTButton';
+import { Text, View, StyleSheet, Dimensions, TextInput, SafeAreaView, ScrollView } from 'react-native';
+import DB from '../../api/api';
+import colors from '../../assets/style/colors';
+import WTButton from '../wt/WTButton';
+import WTIconButton from '../wt/WTIconButton';
+import { handleLogin } from './Model';
 function LoginView(props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const [page, setPage] = useState("Login");
 
-    const handleLogin = async (username, password) => {
-        let data = await DB.auth.login(username, password);
-        setMessage(data.message);
-        setPage("TabMenu");
-    }
+
 
 
     return (
         <SafeAreaView style={styles.mainContainer}>
-            {
-                page == "Login" &&
-                <View style={styles.mainContainer}>
+            <View style={styles.mainContainer}>
+                <WTIconButton library='Ionicons' name='arrow-back' onPress={() => { props.onClose() }} />
                 <ScrollView>
                     <Text style={styles.title}>WELCOME BACK ON WORKOUTRACKER</Text>
                     <View>
@@ -33,13 +28,9 @@ function LoginView(props) {
                         </View>
                     </View>
                     <Text style={styles.error}>{message}</Text>
-                    <WTButton onPress={() => handleLogin(username, password)} text={"Login"}></WTButton>
+                    <WTButton onPress={() => handleLogin(username, password, props.onLogin, setMessage)} text={"Login"}></WTButton>
                 </ScrollView>
-                </View>
-            }
-            {
-                page == "TabMenu" && <TabMenu />
-            }
+            </View>
 
         </SafeAreaView>
     );
@@ -58,7 +49,8 @@ const styles = StyleSheet.create({
         display: 'flex',
     },
     mainContainer: {
-        flex: 1
+        flex: 1,
+        backgroundColor: colors.MAIN
     },
     title: {
         fontSize: Dimensions.get('window').width * 0.06,
@@ -119,5 +111,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         alignSelf: 'center',
         textTransform: 'uppercase'
+    },
+    arrowContainer: {
+        justifyContent: 'flex-start',
+        marginVertical: 10,
+        marginHorizontal: 10
     }
 });

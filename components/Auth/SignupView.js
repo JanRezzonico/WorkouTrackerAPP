@@ -1,27 +1,29 @@
 import { useState } from 'react';
 import { Text, View, StyleSheet, Image, Dimensions, TextInput, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 import NumericInput from 'react-native-numeric-input'
-import DB from '../api/api';
-import colors from '../assets/style/colors';
-import WTButton from './wt/WTButton';
-import WTDatePicker from './wt/WTDatePicker';
+import DB from '../../api/api';
+import colors from '../../assets/style/colors';
+import WTButton from '../wt/WTButton';
+import WTDatePicker from '../wt/WTDatePicker';
+import { Ionicons } from '@expo/vector-icons';
+import defaults from '../../constants/constants';
+import constants from '../../constants/constants';
+import WTIconButton from '../wt/WTIconButton';
+import { handleSignup } from './Model';
 
 function SignupView(props) {
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [weight, setWeight] = useState(1);
-    const [height, setHeight] = useState(1);
+    const [weight, setWeight] = useState(null);
+    const [height, setHeight] = useState(null);
     const [date, setDate] = useState(new Date());
-    
-    const handleSignup = async (user) => {
-        await DB.auth.signup(user);
-
-    }
+    const [message, setMessage] = useState('');
 
     return (
         <SafeAreaView style={styles.mainContainer}>
+            <WTIconButton library='Ionicons' name="arrow-back" onPress={() => { props.onClose() }} />
             <ScrollView>
                 <Text style={styles.title}>WELCOME ON WORKOUTRACKER</Text>
                 <View style={styles.card}>
@@ -54,8 +56,8 @@ function SignupView(props) {
                     <NumericInput
                         value={weight}
                         onChange={(value) => setWeight(value)}
-                        minValue={1}
-                        maxValue={999}
+                        minValue={constants.WEIGHT_MIN}
+                        maxValue={constants.WEIGHT_MAX}
                         type='up-down'
                         rounded
                         upDownButtonsBackgroundColor={colors.MAIN}
@@ -68,41 +70,35 @@ function SignupView(props) {
                         style={styles.inputs}
                         value={height}
                         onChange={(value) => setHeight(value)}
-                        minValue={1}
-                        maxValue={300}
+                        minValue={constants.HEIGHT_MIN}
+                        maxValue={constants.HEIGHT_MAX}
                         type='up-down'
                         rounded
                         upDownButtonsBackgroundColor={colors.MAIN}
                         iconStyle={{ color: 'white', fontWeight: 'bold' }}
                         textColor={'white'}
-                        valueType='real'
+                        valueType='integer'
                     />
                     <Text style={styles.subTitle}>Birthday</Text>
                     <WTDatePicker date={date} setDate={setDate} />
+                    <Text style={styles.error}>{message}</Text>
+                    <WTButton
+                        onPress={() => handleSignup({
+                            username: username,
+                            password: password,
+                            first_name: name,
+                            last_name: surname,
+                            birthday: date,
+                            height: height,
+                            weight: weight
+                        },
+                            props.onLogin,
+                            setMessage
+                        )}
+                        text={"Sign up"}
+                    />
                 </View>
-                {/* <TouchableOpacity onPress={() => handleSignup({
-                    username: username,
-                    password: password,
-                    first_name: name,
-                    last_name: surname,
-                    birthday: date,
-                    height: height,
-                    weight: weight
-                })} style={styles.appButtonContainer}>
-                    <Text style={styles.appButtonText}>Sign up</Text>
-                </TouchableOpacity> */}
-                <WTButton  
-                    onPress={() => handleSignup({
-                        username: username,
-                        password: password,
-                        first_name: name,
-                        last_name: surname,
-                        birthday: date,
-                        height: height,
-                        weight: weight
-                    })}
-                    text={"Sign up"}
-                    ></WTButton>
+
             </ScrollView>
         </SafeAreaView>
 
@@ -122,6 +118,7 @@ const styles = StyleSheet.create({
         display: 'flex',
     },
     mainContainer: {
+        flex: 1,
         backgroundColor: colors.MAIN,
     },
     title: {
@@ -183,5 +180,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         alignSelf: 'center',
         textTransform: 'uppercase'
+    },
+    arrowContainer: {
+        justifyContent: 'flex-start',
+        marginVertical: 10,
+        marginHorizontal: 10
     }
 });

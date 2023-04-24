@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet, View, Text, Dimensions, TextInput, ScrollView
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../../assets/style/colors';
 import WTHorizontalLine from "./../wt/WTHorizontalLine";
+import WTIconButton from '../wt/WTIconButton';
 
 const normalMargin = Dimensions.get('window').height * 0.02;
 const cardWidth = Dimensions.get('window').width * 0.9;
@@ -27,6 +28,7 @@ const StartedWorkout = (workout) => {
                             <TouchableOpacity onPress={() => { addEx() }}>
                                 <Icon name='add-outline' style={styles.btnIcon} />
                             </TouchableOpacity>
+                            {/* <WTIconButton library='Ionicons' name='add-outline' onPress={() => { addEx() }} /> */}
                         </View>
                         <View>
                             <FlatList
@@ -49,6 +51,7 @@ const StartedWorkout = (workout) => {
                                         <TouchableOpacity onPress={() => { rmEx(item.id) }}>
                                             <Icon name='close-outline' style={styles.removeButton} />
                                         </TouchableOpacity>
+                                        {/* <WTIconButton library='Ionicons' name='close-outline' onPress={() => { rmEx(item.id) }} /> */}
                                     </View>
                                 }
                             />

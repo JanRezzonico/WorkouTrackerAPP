@@ -4,9 +4,8 @@ import { SafeAreaView, StyleSheet, View, Text, Dimensions, TextInput, ScrollView
 import Icon from 'react-native-vector-icons/Ionicons';
 import WTHorizontalLine from "./wt/WTHorizontalLine";
 import ExercisePicker from './ExercisePicker';
-import { color } from '@rneui/base';
-import { withTheme } from '@rneui/themed';
 import colors from '../assets/style/colors';
+import WTIconButton from './wt/WTIconButton';
 
 const normalMargin = Dimensions.get('window').height * 0.02;
 const cardWidth = Dimensions.get('window').width * 0.9;
@@ -73,9 +72,7 @@ function CreateWorkoutModelView(props) {
                                 }}
                                 key={item.id.toString}
                             />
-                            <TouchableOpacity onPress={() => { rmEx(item.id) }}>
-                                <Icon name='close-outline' style={styles.removeBtn} />
-                            </TouchableOpacity>
+                            <WTIconButton library='Ionicons' name='close-outline' onPress={() => { rmEx(item.id) }} />
                         </View>
                         <View style={{flexDirection: 'column'}}>
                             <View style={{flexDirection: 'row'}}>
@@ -192,11 +189,6 @@ const styles = StyleSheet.create({
     select: {
         flex: 4,
         fontSize: 30,
-    },
-    removeBtn: {
-        flex: 1,
-        fontSize: 25,
-        color: 'white',
     },
     exProp: {
         flex: 1,

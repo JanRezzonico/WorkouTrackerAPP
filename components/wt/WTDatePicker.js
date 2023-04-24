@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Feather } from '@expo/vector-icons';
+import PropTypes from 'prop-types';
 
 const WTDatePicker = ({ date, setDate }) => {
     const [mode, setMode] = useState('date');
@@ -25,9 +26,9 @@ const WTDatePicker = ({ date, setDate }) => {
 
     return (
         <View>
-            <TouchableOpacity onPress={showPicker} style={{alignItems: "center"}}>
+            <TouchableOpacity onPress={showPicker} style={{ alignItems: "center" }}>
                 <Feather name="calendar" size={32} color="white" />
-                <Text style={{color: "white"}}>{date.toLocaleDateString()} </Text>
+                <Text style={{ color: "white" }}>{date.toLocaleDateString()} </Text>
             </TouchableOpacity>
             {show && (
                 <DateTimePicker
@@ -40,6 +41,11 @@ const WTDatePicker = ({ date, setDate }) => {
             )}
         </View>
     );
+};
+
+WTDatePicker.propTypes = {
+    date: PropTypes.instanceOf(Date).isRequired,
+    setDate: PropTypes.func.isRequired,
 };
 
 export default WTDatePicker;

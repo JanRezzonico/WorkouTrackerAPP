@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, Dimensions } from "react-native";
 import { SearchBar } from '@rneui/themed';
-import { filter, getDistinct } from './ExercisesListModel';
+import { filter, getDistinct } from './Model';
 import colors from '../../../assets/style/colors';
 import DropDownPicker from 'react-native-dropdown-picker';
 import WTButton from '../../wt/WTButton';
@@ -12,9 +12,9 @@ function ExercisesFilters(props) {
     const distinctPrimaryMuscles = getDistinct("primaryMuscles");
     const distinctForces = getDistinct("equipment");
     const [filters, setFilters] = useState({ search: '', muscles: 'All', force: 'All' });
-    const setSearchFilter = (search) => { setFilters({ search: search, ...filters }) };
-    const setMusclesFilter = (value) => { setFilters({ muscles: value, ...filters }) };
-    const setForceFilter = (value) => { setFilters({ force: value, ...filters}) };
+    const setSearchFilter = (value) => { setFilters(prevFilters => ({ ...prevFilters, search: value })); updateData(); };
+    const setMusclesFilter = (value) => { setFilters(prevFilters => ({ ...prevFilters, muscles: value })); updateData(); };
+    const setForceFilter = (value) => { setFilters(prevFilters => ({ ...prevFilters, force: value })); updateData(); };
     const updateData = () => {
         props.setData(filter(filters));
     }
@@ -33,7 +33,7 @@ function ExercisesFilters(props) {
                 value={search}
             />
             <View style={styles.horizontalContainer}>
-                <Select options={distinctPrimaryMuscles} onSelect={(value)=>{setMusclesFilter(value.value)}} />
+                <Select options={distinctPrimaryMuscles} onSelect={(value) => { setMusclesFilter(value.value) }} />
                 {/* <View style={styles.dropdownContainer}>
                     <DropDownPicker
                         open={openMuscles}
@@ -58,7 +58,7 @@ function ExercisesFilters(props) {
                 </View> */}
                 <View style={styles.dropdownContainer}>
                     <WTButton text={"Ok"} onPress={updateData} />
-                </View> 
+                </View>
             </View>
         </SelectProvider>
     );
