@@ -1,8 +1,15 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 //const BASE_URL = "http://10.4.25.11:3000/api";
+<<<<<<< HEAD
 const BASE_URL = "http://10.4.25.23:3000/api";
 //const BASE_URL = "http://192.168.1.29:3000/api";
 //const BASE_URL = "http://10.4.25.11:3000/api";
+=======
+//const BASE_URL = "http://10.4.25.23:3000/api";
+//const BASE_URL = "http://192.168.1.29:3000/api";
+const BASE_URL = "http://10.4.25.11:3000/api";
+//const BASE_URL = "https://workoutracker-5xep.onrender.com/api";
+>>>>>>> 9497cd10d06a9b883f03e56a4c9ecd8374641c76
 const saveId = async (data) => {
     if (data._id) {
         try {
@@ -20,7 +27,6 @@ const DB = {
     user: {
         async get() {
             try {
-                console.log(`${BASE_URL}/user/${global.USER_ID}`);
                 const response = await fetch(`${BASE_URL}/user/${global.USER_ID}`);
                 const data = await response.json();
                 return data;
@@ -32,6 +38,17 @@ const DB = {
         async post(user) {
             const response = await fetch(`${BASE_URL}/user`, {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+            });
+            const data = await response.json();
+            return data;
+        },
+        async update(user) {
+            const response = await fetch(`${BASE_URL}/user/${global.USER_ID}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -79,6 +96,19 @@ const DB = {
             return data.message;
         },
         async signup(user) {
+            const response = await fetch(`${BASE_URL}/auth/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+            });
+
+            const data = await response.json();
+            console.log(data);
+            await saveId(data);
+        },
+        async update(user) {
             const response = await fetch(`${BASE_URL}/auth/register`, {
                 method: 'POST',
                 headers: {

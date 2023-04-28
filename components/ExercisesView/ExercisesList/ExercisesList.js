@@ -28,7 +28,7 @@ function ExercisesList(props) {
         renderSectionHeader={renderSectionHeader}
         contentContainerStyle={styles.contentContainer}
         keyExtractor={(item, index) => item.name + index} 
-        scrollIndicatorInsets={{ top: 50, bottom: 50 }}
+        // scrollIndicatorInsets={{ top: 50, bottom: 50 }}
       />
     </View>
 

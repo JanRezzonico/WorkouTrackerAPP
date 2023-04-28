@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Dimensions, Modal } from 'react-native';
+import colors from '../assets/style/colors';
 import WTButton from './wt/WTButton';
+import WTIconButton from './wt/WTIconButton';
+import WTDatePicker from './wt/WTDatePicker';
 
-const UserInfoModal = ({ user, setUser }) => {
+const UserInfoModal = ({ user, setUser, visible, setVisible }) => {
   const [firstName, setFirstName] = useState(user.first_name);
   const [lastName, setLastName] = useState(user.last_name);
   const [birthday, setBirthday] = useState(new Date(user.birthday));
-  const [height, setHeight] = useState(user.height.toString());
-  const [weight, setWeight] = useState(user.weight.toString());
+  const [height, setHeight] = useState(user.height);
+  const [weight, setWeight] = useState(user.weight);
 
   const handleSave = () => {
     setUser({
@@ -18,56 +21,43 @@ const UserInfoModal = ({ user, setUser }) => {
       weight: parseInt(weight),
     });
   };
+  const handleRequestClose = () => {
+    setFirstName(user.first_name);
+    setLastName(user.last_name);
+    setBirthday(new Date(user.birthday));
+    setHeight(user.height);
+    setWeight(user.weight);
+    setVisible(!visible);
+  }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.labelInfo}>Name</Text>
-      <TextInput
-        style={styles.input}
-        value={firstName}
-        onChangeText={setFirstName}
-      />
-      <Text style={styles.labelInfo}>Surname</Text>
-      <TextInput
-        style={styles.input}
-        value={lastName}
-        onChangeText={setLastName}
-      />
-      <Text style={styles.labelInfo}>Birthday</Text>
-      <WTDatePicker
-        style={styles.datePicker}
-        date={birthday}
-        mode="date"
-        format="DD/MM/YYYY"
-        onDateChange={(date) => setBirthday(new Date(date))}
-      />
-      <Text style={styles.labelInfo}>Height</Text>
-      <TextInput
-        style={styles.input}
-        value={height}
-        keyboardType="numeric"
-        onChangeText={setHeight}
-      />
-      <Text style={styles.labelInfo}>Weight</Text>
-      <TextInput
-        style={styles.input}
-        value={weight}
-        keyboardType="numeric"
-        onChangeText={setWeight}
-      />
-      <WTButton text="Save" onPress={handleSave} />
-    </View>
+    <Modal
+      animationType='fade'
+      visible={visible}
+      transparent={true}
+      onRequestClose={handleRequestClose}>
+      
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    alignItems: "center",
+    backgroundColor: colors.MAIN,
+    borderRadius: 10,
+    padding: 10,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: Dimensions.get('window').width * 0.75,
+    elevation: 20,
+    shadowColor: 'black',
   },
   labelInfo: {
     fontSize: 16,
     fontWeight: 'bold',
     marginTop: 16,
+    color: 'white'
   },
   input: {
     borderWidth: 1,
@@ -76,10 +66,16 @@ const styles = StyleSheet.create({
     padding: 8,
     marginTop: 8,
     marginBottom: 16,
+    color: 'white'
   },
   datePicker: {
     width: '100%',
     marginBottom: 16,
+  },
+  horizontalContainer: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 });
 
