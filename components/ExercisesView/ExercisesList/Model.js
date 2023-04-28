@@ -40,21 +40,15 @@ export const getDistinct = (propName) => {
         label: v,
         value: v
     }));
-    // return sorted;
 }
 
 export const filter = (filter) => {
-    const useSearchFilter = filter.search !== '';
-    const useMusclesFilter = filter.muscles !== 'All';
-    const useForceFilter = filter.force !== 'All';
-    if (!useSearchFilter && !useMusclesFilter && !useForceFilter) {
-      // Return the original array if no filters are applied
-      return global.exercises;
+    const search = filter.search.trim().toLowerCase();
+    if (search === '') {
+        // Return the original array if no filters are applied
+        return global.exercises;
     }
     return global.exercises.filter((exercise) => {
-      const search = exercise.name.toLowerCase().includes(filter.search.toLowerCase()) || !useSearchFilter;
-      const muscles = useMusclesFilter ? exercise.primaryMuscles.includes(filter.muscles) : true;
-      const force = exercise.force === filter.force || !useForceFilter;
-      return search && muscles && force;
+        return exercise.name.toLowerCase().includes(search);
     });
 }
