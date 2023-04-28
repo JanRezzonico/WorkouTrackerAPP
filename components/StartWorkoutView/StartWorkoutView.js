@@ -6,6 +6,7 @@ import CreateWorkoutModelView from "../CreateWorkoutModelView";
 import StartedWorkout from "./StartedWorkout";
 import WTButton from "../wt/WTButton";
 import colors from "../../assets/style/colors";
+import WTIconButton from "../wt/WTIconButton";
 
 const customTemplates = [
     {
@@ -110,8 +111,31 @@ const cardW = Dimensions.get('window').width * 0.9;
 const normalFont = Dimensions.get('window').width * 0.034;
 const subTitleFont = Dimensions.get('window').width * 0.045;
 
+function StartWorkoutView(props) {
+    return (
+        <View>
+            <SafeAreaView style={styles.mainContainer}>
+                {
+                    <FlatList
+                        data={customTemplates}
+                        renderItem={(e) => {
+                            return (
+                                <TemplateItemView template={e} />
+                            );
+                        }}
+                        ListHeaderComponent={headerComponent}
+                        ListFooterComponent={footerComponent}
+                    />
+                }
+            </SafeAreaView>
+        </View>
+    );
+}
 
-
+/*
+    The headerComponent display the Quick start section and the custom templates title
+    Is a component of the FlatList in the main function
+*/
 const headerComponent = () => {
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -119,9 +143,6 @@ const headerComponent = () => {
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.subtitle}>Quick Start</Text>
-                {/* <TouchableOpacity onPress={() => null} style={styles.appButtonContainer}>
-                    <Text style={styles.appButtonText}>Start Empty Workout</Text>
-                </TouchableOpacity> */}
                 <WTButton onPress={() => null} text={"Start Empty Workout"}></WTButton>
             </View>
             <View style={styles.contents}>
@@ -147,16 +168,13 @@ const headerComponent = () => {
                                 <View style={styles.popUpBtnContainer}>
                                     <TouchableOpacity
                                         style={[styles.popUpButton, { backgroundColor: '#80898b' }]}
-                                        onPress={() => { setModalVisible(!modalVisible); }}
+                                        onPress={() => { setModalVisible(!modalVisible);}}
                                     >
                                         <Text style={styles.appButtonText}>Close</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity
                                         style={styles.popUpButton}
-                                        onPress={() => {
-
-                                            setModalVisible(!modalVisible);
-                                        }}
+                                        onPress={() => {setModalVisible(!modalVisible);}}
                                     >
                                         <Text style={styles.appButtonText}>Create</Text>
                                     </TouchableOpacity>
@@ -164,15 +182,17 @@ const headerComponent = () => {
                             </View>
                         </View>
                     </Modal>
-                    <TouchableOpacity onPress={() => setModalVisible(true)}>
-                        <Icon name="add-outline" style={styles.btnIcon} />
-                    </TouchableOpacity>
+                    <WTIconButton onPress={() => setModalVisible(true)} library="Ionicons" name="add-outline" size={20}/>
                 </View>
             </View>
         </View>
     )
 };
 
+/*
+    The footerComponent display the Sample template section
+    Is a component of the FlatList in the main function
+*/
 const footerComponent = () => {
     return (
         <View style={styles.container}>
@@ -186,32 +206,17 @@ const footerComponent = () => {
                         );
                     }}
                 />
-                <View style={styles.bottomPlaceHolder}></View>
+                <View style={styles.bottomPlaceHolder}/>
             </View>
         </View>
     )
 }
 
-function StartWorkoutView(props) {
-    return (
-        <View>
-            <SafeAreaView style={styles.mainContainer}>
-                {<FlatList
-                    data={customTemplates}
-                    renderItem={(e) => {
-                        return (
-                            <TemplateItemView template={e} />
-                        );
-                    }}
-                    ListHeaderComponent={headerComponent}
-                    ListFooterComponent={footerComponent}
-                />}
-            </SafeAreaView>
-        </View>
-    );
-}
-
-function TemplateItemView(props) {
+/*
+    TemplateItemView is a component used to display a workout template
+    When a user clicks on a template a modal will open and show the view to start the workout
+*/
+const TemplateItemView = (props) => {
     const [modal2Visible, setModal2Visible] = useState(false);
 
     return (

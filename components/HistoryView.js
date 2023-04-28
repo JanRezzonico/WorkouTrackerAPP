@@ -51,7 +51,10 @@ function HistoryView(props) {
             </View>
             <HistoryListView />
 
-            {/* Pop-up modal */}
+            {/*
+                the component modal is used to show a pop-up when a user click on the calendar or chart button
+                this specific modal shows the user's history in a calendar and on a chart
+            */}
             <Modal
                 animationType='fade'
                 visible={modalVisible}

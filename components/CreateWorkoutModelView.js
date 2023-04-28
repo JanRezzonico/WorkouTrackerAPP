@@ -13,12 +13,15 @@ const cardWidth = Dimensions.get('window').width * 0.9;
 
 function CreateWorkoutModelView(props) {
     //let exId = 1;
+    // exId is used to set an uinique ID to each exercise
     const [exId, setExId] = useState(0);
     const [modalVisible, setModalVisible] = useState(false);
     const [name, setName] = useState('New Workout');
+    // List of exercise
     const [exList, setExList] = useState([{ id: exId, selectedOption: "Select an option" }]);
+    // List of sets and kg, with the ID of the exercise
     const [exProp, setExProp] = useState([{ id: exId, kg:0, rep:0 }])
-
+    // exercise selected from the picker
     const [selectedOption, setSelectedOption] = useState('Select an option');
     const data = require('../assets/json/exercises.json');
     const options = data.exercises.map(exercise => exercise.name);
@@ -58,6 +61,10 @@ function CreateWorkoutModelView(props) {
                 }
                 renderItem={({ item }) => 
                     <View style={styles.exercise}>
+                        {/* 
+                            Start
+                            Exercise picker + remove button  
+                        */}
                         <View style={styles.exerciseType}>
                             <ExercisePicker
                                 style={styles.select}
@@ -75,6 +82,10 @@ function CreateWorkoutModelView(props) {
                             />
                             <WTIconButton library='Ionicons' name='close-outline' onPress={() => { rmEx(item.id) }} />
                         </View>
+                        {/* 
+                            End 
+                            Exercise picker + remove button  
+                        */}
                         <View style={{flexDirection: 'column'}}>
                             <View style={{flexDirection: 'row'}}>
                                 <TextInput

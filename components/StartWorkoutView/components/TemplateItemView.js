@@ -15,11 +15,7 @@ const subTitleFont = Dimensions.get('window').width * 0.045;
 //         <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.woTemplate}>
 //             <Text style={styles.templateTitle}>{props.template.item.title}</Text>
             
-<<<<<<< HEAD
-            {/* <WOProgressModal visible={modalVisible} onclose={()=>{setModalVisible(false)}}/> */}
-=======
 //             <WOProgressModal visible={modalVisible} onclose={() =>setModalVisible(false)}/>
->>>>>>> aa61a42a8e5b47e7cd6c8acc164c8dd295347d6e
 
 //             <FlatList // List of Exercises like 3xSquat, 3xCurl
 //                 data={props.template.item.exercises}
