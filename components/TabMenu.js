@@ -3,7 +3,7 @@ import { Ionicons, FontAwesome5, FontAwesome, MaterialCommunityIcons, MaterialIc
 import React, { useState, useEffect } from 'react';
 import ExercisesView from './ExercisesView/ExercisesView';
 import HistoryView from './HistoryView';
-import ProfileView from './ProfileView';
+import ProfileView from './Profile/ProfileView';
 import StartWorkoutView from './StartWorkoutView/StartWorkoutView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text } from 'react-native';
