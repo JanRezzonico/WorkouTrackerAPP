@@ -4,7 +4,7 @@
     "slug": "workoutracker",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/wt-icon.png",
+    "icon": "./assets/wt-icon-bg.png",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",

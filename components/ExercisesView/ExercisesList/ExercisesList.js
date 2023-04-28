@@ -1,34 +1,40 @@
+import { useState } from "react";
 import { Text, View, FlatList, StyleSheet, SectionList, Dimensions } from "react-native";
 import ExerciseListItem from "./ExerciseListItem";
+import InfoModal from "./InfoModal";
 import { sectionize } from "./Model";
 
-const renderItem = ({item}) => {
-  return(
-    <ExerciseListItem {...item} />
-  );
-};
-const renderSectionHeader = ({section}) => {
-  if(section.data.length == 0){
-    return <View><Text>Doesn't work..</Text></View>;
-  }else{
-    return(
+
+
+function ExercisesList({ data, onItemPress }) {
+  const [exercise, setExercise] = useState(null);
+  const [visible, setVisible] = useState(false);
+  const openInfoModal = (exercise) => {
+    setExercise(exercise);
+    setVisible(true);
+  }
+
+  const renderItem = ({ item }) => {
+    return (
+      <ExerciseListItem exercise={item} openInfoModal={openInfoModal} />
+    );
+  };
+  const renderSectionHeader = ({ section }) => {
+    return (
       <View style={styles.textTitleContainer}>
         <Text style={styles.textTitle}>{section.title}</Text>
       </View>
     );
   }
-}
-
-function ExercisesList(props) {
   return (
     <View style={styles.mainContainer}>
+      <InfoModal exercise={exercise} visible={visible} setVisible={setVisible} />
       <SectionList
-        sections={sectionize(props.data)}
+        sections={sectionize(data)}
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
         contentContainerStyle={styles.contentContainer}
-        keyExtractor={(item, index) => item.name + index} 
-        // scrollIndicatorInsets={{ top: 50, bottom: 50 }}
+        keyExtractor={(item, index) => item.name + index}
       />
     </View>
 
