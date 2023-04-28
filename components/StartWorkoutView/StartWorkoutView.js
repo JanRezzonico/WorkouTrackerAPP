@@ -111,92 +111,92 @@ const normalFont = Dimensions.get('window').width * 0.034;
 const subTitleFont = Dimensions.get('window').width * 0.045;
 
 
-// const headerComponent = () => {
-//     const [modalVisible, setModalVisible] = useState(false);
-//     const [modal2Visible, setModal2Visible] = useState(false);
+const headerComponent = () => {
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modal2Visible, setModal2Visible] = useState(false);
 
-//     return (
-//         <View style={styles.container}>
-//             <View style={styles.header}>
-//                 <Text style={styles.subtitle}>Quick Start</Text>
-//                 {/* <TouchableOpacity onPress={() => null} style={styles.appButtonContainer}>
-//                     <Text style={styles.appButtonText}>Start Empty Workout</Text>
-//                 </TouchableOpacity> */}
-//                 <WTButton onPress={() => null} text={"Start Empty Workout"}></WTButton>
-//             </View>
-//             <View style={styles.contents}>
-//                 <View style={styles.addTemplate}>
-//                     <Text style={styles.subtitle}>Custom Templates</Text>
-//                     {/*
-//                      the component modal is used to show a pop-up when a user tries to add a custom template
-//                      this specific modal shows the creation of a new workout template
-//                     */}
-//                     <Modal
-//                         animationType='fade'
-//                         visible={modalVisible}
-//                         transparent={true}
-//                         onRequestClose={() => {
-//                             setModalVisible(!modalVisible);
-//                         }}>
-//                         {/* Pop-up content*/}
-//                         <View style={styles.popUpCenter}>
-//                             <View style={styles.popUp}>
-//                                 <CreateWorkoutModelView weight={70} height={1.70} />
-//                                 {/* Close pop-up button */}
-//                                 <View style={styles.popUpBtnContainer}>
-//                                     <TouchableOpacity
-//                                         style={[styles.popUpButton, { backgroundColor: '#80898b' }]}
-//                                         onPress={() => { setModalVisible(!modalVisible); }}
-//                                     >
-//                                         <Text style={styles.appButtonText}>Close</Text>
-//                                     </TouchableOpacity>
-//                                     <TouchableOpacity
-//                                         style={styles.popUpButton}
-//                                         onPress={() => {
+    return (
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.subtitle}>Quick Start</Text>
+                {/* <TouchableOpacity onPress={() => null} style={styles.appButtonContainer}>
+                    <Text style={styles.appButtonText}>Start Empty Workout</Text>
+                </TouchableOpacity> */}
+                <WTButton onPress={() => null} text={"Start Empty Workout"}></WTButton>
+            </View>
+            <View style={styles.contents}>
+                <View style={styles.addTemplate}>
+                    <Text style={styles.subtitle}>Custom Templates</Text>
+                    {/*
+                     the component modal is used to show a pop-up when a user tries to add a custom template
+                     this specific modal shows the creation of a new workout template
+                    */}
+                    <Modal
+                        animationType='fade'
+                        visible={modalVisible}
+                        transparent={true}
+                        onRequestClose={() => {
+                            setModalVisible(!modalVisible);
+                        }}>
+                        {/* Pop-up content*/}
+                        <View style={styles.popUpCenter}>
+                            <View style={styles.popUp}>
+                                <CreateWorkoutModelView weight={70} height={1.70} />
+                                {/* Close pop-up button */}
+                                <View style={styles.popUpBtnContainer}>
+                                    <TouchableOpacity
+                                        style={[styles.popUpButton, { backgroundColor: '#80898b' }]}
+                                        onPress={() => { setModalVisible(!modalVisible); }}
+                                    >
+                                        <Text style={styles.appButtonText}>Close</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        style={styles.popUpButton}
+                                        onPress={() => {
 
-//                                             setModalVisible(!modalVisible);
-//                                         }}
-//                                     >
-//                                         <Text style={styles.appButtonText}>Create</Text>
-//                                     </TouchableOpacity>
-//                                 </View>
-//                             </View>
-//                         </View>
-//                     </Modal>
-//                     <TouchableOpacity onPress={() => setModalVisible(true)}>
-//                         <Icon name="add-outline" style={styles.btnIcon} />
-//                     </TouchableOpacity>
-//                 </View>
-//             </View>
-//         </View>
-//     )
-// };
+                                            setModalVisible(!modalVisible);
+                                        }}
+                                    >
+                                        <Text style={styles.appButtonText}>Create</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    </Modal>
+                    <TouchableOpacity onPress={() => setModalVisible(true)}>
+                        <Icon name="add-outline" style={styles.btnIcon} />
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </View>
+    )
+};
 
-// const footerComponent = () => {
-//     return (
-//         <View style={styles.container}>
-//             <View style={styles.contents}>
-//                 <Text style={styles.subtitle}>Sample Templates</Text>
-//                 <FlatList
-//                     data={sampleTemplates}
-//                     renderItem={(e) => {
-//                         return (
-//                             <TemplateItemView template={e} />
-//                         );
-//                     }}
-//                 />
-//                 <View style={styles.bottomPlaceHolder}></View>
-//             </View>
-//         </View>
-//     )
-// }
+const footerComponent = () => {
+    return (
+        <View style={styles.container}>
+            <View style={styles.contents}>
+                <Text style={styles.subtitle}>Sample Templates</Text>
+                <FlatList
+                    data={sampleTemplates}
+                    renderItem={(e) => {
+                        return (
+                            <TemplateItemView template={e} />
+                        );
+                    }}
+                />
+                <View style={styles.bottomPlaceHolder}></View>
+            </View>
+        </View>
+    )
+}
 
 function StartWorkoutView(props) {
     return (
         <View>
             <SafeAreaView style={styles.mainContainer}>
                 <Text>Non ci credo</Text>
-                {/* <FlatList
+                <FlatList
                     data={customTemplates}
                     renderItem={(e) => {
                         return (
@@ -205,7 +205,7 @@ function StartWorkoutView(props) {
                     }}
                     ListHeaderComponent={headerComponent}
                     ListFooterComponent={footerComponent}
-                /> */}
+                />
             </SafeAreaView>
         </View>
     );

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, FlatList, ScrollView, Dimensions, StyleSheet, TouchableOpacity,Modal } from "react-native";
 import colors from '../../../assets/style/colors';
-import WOProgressModal from '../StartWorkoutView';
+
 
 const normalMargin = Dimensions.get('window').height * 0.015;
 const cardW = Dimensions.get('window').width * 0.9;
@@ -15,7 +15,7 @@ function TemplateItemView(props) {
         <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.woTemplate}>
             <Text style={styles.templateTitle}>{props.template.item.title}</Text>
             
-            <WOProgressModal visible={modalVisible} onclose={setModalVisible(false)}/>
+            {/* <WOProgressModal visible={modalVisible} onclose={()=>{setModalVisible(false)}}/> */}
 
             <FlatList // List of Exercises like 3xSquat, 3xCurl
                 data={props.template.item.exercises}

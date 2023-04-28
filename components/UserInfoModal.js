@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import WTButton from './wt/WTButton';
+import WTDatePicker from './wt/WTDatePicker';
 
 const UserInfoModal = ({ user, setUser }) => {
   const [firstName, setFirstName] = useState(user.first_name);

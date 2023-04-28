@@ -1,11 +1,13 @@
 import { Text, View, StyleSheet, Dimensions, TouchableOpacity, Modal } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import HistoryListView from "./HistoryListView";
 import HistoryChartView from "./HistoryChartView";
 import CalendarView from "./CalendarView";
 import Icon from 'react-native-vector-icons/Ionicons';
 import DB from '../api/api';
 import colors from '../assets/style/colors';
+import WTButton from './wt/WTButton';
+import WTIconButton from './wt/WTIconButton';
 
 const normalMargin = Dimensions.get('window').height * 0.02;
 
@@ -18,6 +20,7 @@ function HistoryView(props) {
         page = param;
     }
 
+    // return the correct page basaed on which button was pressed
     function getPage() {
         if (page === "Calendar") {
             return (<CalendarView />);
@@ -30,6 +33,11 @@ function HistoryView(props) {
         <View style={styles.bg}>
             <View style={styles.topNav}>
                 <Text style={styles.title}>Workout History</Text>
+                <WTIconButton
+                    onPress={() => {
+                        setModalVisible(true, page); setPage("Calendar")
+                    }}
+                />
                 <TouchableOpacity onPress={() => { setModalVisible(true, page); setPage("Calendar") }} style={styles.btnContain}>
                     <Icon name="calendar" style={styles.btnIcon} />
                 </TouchableOpacity>
@@ -38,23 +46,32 @@ function HistoryView(props) {
                 </TouchableOpacity>
             </View>
             <HistoryListView />
+
+            {/* Pop-up modal */}
             <Modal
                 animationType='fade'
                 visible={modalVisible}
                 transparent={true}
-                onRequestClose={() => {
-                    setModalVisible(!modalVisible);
-                }}>
+                onRequestClose={() => { 
+                    setModalVisible(!modalVisible); 
+                }}
+            >
                 {/* Pop-up content*/}
                 <View style={styles.popUpCenter}>
                     <View style={styles.popUp}>
                         <View>{getPage()}</View>
-                        <TouchableOpacity style={styles.popUpButton}
-                            onPress={
-                                () => { setModalVisible(!modalVisible); }
-                            }>
+                        <WTButton
+                            onPress={() => { 
+                                setModalVisible(!modalVisible); 
+                            }}
+                            text="Close"
+                        />
+                        {/* <TouchableOpacity style={styles.popUpButton}
+                            onPress={() => { 
+                                setModalVisible(!modalVisible); 
+                            }}>
                             <Text style={styles.appButtonText}><Icon name="close" style={{ color: 'white', fontSize: 20 }}></Icon></Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                 </View>
             </Modal>
