@@ -1,6 +1,5 @@
 import { View, Dimensions, StyleSheet } from "react-native";
-function WTHorizontalLine(props) {
-    let color = props.color ? props.color : "black";
+function WTHorizontalLine({color = "black"}) {
     return (
         <View
             style={{
