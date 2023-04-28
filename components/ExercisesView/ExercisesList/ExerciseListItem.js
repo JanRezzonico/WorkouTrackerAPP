@@ -1,14 +1,14 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import WTHorizontalLine from "../../wt/WTHorizontalLine";
 
-const ExerciseListItem = (props) => {
+const ExerciseListItem = ({ exercise, openInfoModal }) => {
     return (
-        <View>
-            <Text style={styles.nameText}>{props.name}</Text>
-            <Text style={styles.musclesText}>{props.primaryMuscles.map(str => str.charAt(0).toUpperCase() + str.slice(1)).join(',')}</Text>
+        <TouchableOpacity onPress={() => { openInfoModal(exercise) }}>
+            <Text style={styles.nameText}>{exercise.name}</Text>
+            <Text style={styles.musclesText}>{exercise.primaryMuscles.map(str => str.charAt(0).toUpperCase() + str.slice(1)).join(',')}</Text>
             <WTHorizontalLine color="white" />
-        </View>
+        </TouchableOpacity>
     );
 };
 
