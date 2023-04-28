@@ -7,11 +7,6 @@ import colors from "../assets/style/colors";
 
 
 const normalMargin = Dimensions.get('window').height * 0.02;
-const cardH = Dimensions.get('window').height * 0.37;
-const cardW = Dimensions.get('window').width * 0.9;
-const normalFont = Dimensions.get('window').width * 0.04;
-const bigFont = Dimensions.get('window').width * 0.06;
-const subTitleFont = Dimensions.get('window').width * 0.05;
 
 
 function HistoryListItem(props) {
@@ -20,6 +15,7 @@ function HistoryListItem(props) {
     const duration = Math.trunc((end_date - start_date) / (1000 * 60)*10)/10;
     const day = start_date.toLocaleDateString();
     let totalWeight = 0;
+    // Calculate total weight
     props.exercises.forEach(e => {
         e.sets.forEach(s => {
             if (s.weight) {
@@ -55,6 +51,7 @@ function HistoryListItem(props) {
                     />
                 </View>
             </Pressable>
+            {/* Pop-up modal */}
             <Modal
                 animationType='fade'
                 visible={modalVisible}
@@ -65,12 +62,6 @@ function HistoryListItem(props) {
                     <View style={styles.popUp}>
                         <ExerciseModalView  {...props} />
                         {/* Close pop-up button */}
-                        {/* <TouchableOpacity style={styles.popUpButton}
-                            onPress={
-                                () => { setModalVisible(!modalVisible); }
-                            }>
-                            <Text style={styles.appButtonText}>Close</Text>
-                        </TouchableOpacity> */}
                         <WTButton onPress={ () => { setModalVisible(!modalVisible); }} text={"Close"}></WTButton>
                     </View>
                 </View>

@@ -1,9 +1,8 @@
-import { Text, View, StyleSheet, Dimensions, TouchableOpacity, Modal } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, Modal } from 'react-native';
 import { useState } from 'react';
 import HistoryListView from "./HistoryListView";
 import HistoryChartView from "./HistoryChartView";
 import CalendarView from "./CalendarView";
-import Icon from 'react-native-vector-icons/Ionicons';
 import DB from '../api/api';
 import colors from '../assets/style/colors';
 import WTButton from './wt/WTButton';
@@ -37,13 +36,18 @@ function HistoryView(props) {
                     onPress={() => {
                         setModalVisible(true, page); setPage("Calendar")
                     }}
+                    library="Ionicons"
+                    name="calendar"
+                    size={20}
                 />
-                <TouchableOpacity onPress={() => { setModalVisible(true, page); setPage("Calendar") }} style={styles.btnContain}>
-                    <Icon name="calendar" style={styles.btnIcon} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => { setModalVisible(true); setPage("Chart") }} style={styles.btnContain}>
-                    <Icon name="stats-chart" style={styles.btnIcon} />
-                </TouchableOpacity>
+                <WTIconButton
+                    onPress={() => {
+                        setModalVisible(true, page); setPage("Calendar")
+                    }}
+                    library="Ionicons"
+                    name="stats-chart"
+                    size={20}
+                />
             </View>
             <HistoryListView />
 
@@ -60,18 +64,7 @@ function HistoryView(props) {
                 <View style={styles.popUpCenter}>
                     <View style={styles.popUp}>
                         <View>{getPage()}</View>
-                        <WTButton
-                            onPress={() => { 
-                                setModalVisible(!modalVisible); 
-                            }}
-                            text="Close"
-                        />
-                        {/* <TouchableOpacity style={styles.popUpButton}
-                            onPress={() => { 
-                                setModalVisible(!modalVisible); 
-                            }}>
-                            <Text style={styles.appButtonText}><Icon name="close" style={{ color: 'white', fontSize: 20 }}></Icon></Text>
-                        </TouchableOpacity> */}
+                        <WTButton onPress={() => { setModalVisible(!modalVisible); }} text="Close"/>
                     </View>
                 </View>
             </Modal>

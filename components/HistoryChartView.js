@@ -31,18 +31,18 @@ const weeklyTime = [];
 //#endregion const
 
 function setXAxis(type){
-        switch(type){
-            case 'd':
-                chartLabels = hours;
-                console.log(chartLabels);
-                break;
-            case 'w':
-                chartLabels = days;
-                console.log(chartLabels);
-                break;
-            case 'm':
-                break;
-        }
+    switch(type){
+        case 'd':
+            chartLabels = hours;
+            console.log(chartLabels);
+            break;
+        case 'w':
+            chartLabels = days;
+            console.log(chartLabels);
+            break;
+        case 'm':
+            break;
+    }
 }
 
 function HistoryChartView(props){
@@ -68,41 +68,54 @@ function HistoryChartView(props){
                 xDomain={{ min: 0, max: maxDataX }}
                 yDomain={{ min: 0, max: maxDataY}}
                 viewport={{ size: { width: 7, height: 10} }}
-                >
+            >
                 <VerticalAxis
-                tickCount={getTicks(data,'x')}
-                includeOriginTick={false}
-                theme={{
-                    axis: { stroke: { color: 'white', width: 1 } },
-                    ticks: { stroke: { color: highlightColor, width: 2 } },
-                    labels: { visible: true, label: {fontSize: 15, fontWeight: 400, color: 'white'},
-                    formatter: (v) => v.toFixed(0) },
-                }}
+                    tickCount={getTicks(data,'x')}
+                    includeOriginTick={false}
+                    theme={{
+                        axis: { stroke: { color: 'white', width: 1 } },
+                        ticks: { stroke: { color: highlightColor, width: 2 } },
+                        labels: { 
+                            visible: true, label: {fontSize: 15, fontWeight: 400, color: 'white'},
+                            formatter: (v) => v.toFixed(0) 
+                        },
+                    }}
                 />
                 <HorizontalAxis
-                tickCount={7}
-                includeOriginTick={false}
-                theme={{
-                    labels: { formatter: (v) => v.toFixed(2) },
-                    axis: { stroke: { color: 'white', width: 1 } },
-                    ticks: { stroke: { color: highlightColor, width: 2 } },
-                    labels: { visible: true, label: { fontSize: 15, fontWeight: 400, color: 'white'},
-                    formatter: (v) => v.toFixed(0) },
-                }}
+                    tickCount={7}
+                    includeOriginTick={false}
+                    theme={{
+                        labels: { formatter: (v) => v.toFixed(2) },
+                        axis: { stroke: { color: 'white', width: 1 } },
+                        ticks: { stroke: { color: highlightColor, width: 2 } },
+                        labels: {
+                            visible: true, label: { fontSize: 15, fontWeight: 400, color: 'white'},
+                            formatter: (v) => v.toFixed(0)
+                        },
+                    }}
                 />
                 <Line
-                hideTooltipAfter={1000}
-                tooltipComponent={
-                <Tooltip theme={{label: { backgroundColor: 'white', fontSize: 15, fontWeight: 500,}, shape: {width:40,height:40,color:'black',rx:10}}} />
-                }
-                theme={
-                    { stroke: { color: '#2e42f8', width: 4 }, scatter: { default: { width: 8, height: 8, rx: 4, color: highlightColor }},}
-                } smoothing='none'
+                    hideTooltipAfter={1000}
+                    tooltipComponent={
+                        <Tooltip 
+                            theme={{
+                                label: { backgroundColor: 'white', fontSize: 15, fontWeight: 500,},
+                                shape: {width:40,height:40,color:'black',rx:10}
+                            }} 
+                        />
+                    }
+                    theme={{ 
+                        stroke: { color: '#2e42f8', width: 4 },
+                        scatter: { default: { width: 8, height: 8, rx: 4, color: highlightColor }},
+                    }} 
+                    smoothing='none'
                 />
-
-                <Area theme={
-                    { gradient: { from: { color: 'white', opacity: 0.4 }, to: { color: '#2e42f8', opacity: 0.5 } } }
-                } smoothing='none' 
+                <Area 
+                    theme={{
+                        gradient: { from: { color: 'white', opacity: 0.4 },
+                        to: { color: '#2e42f8', opacity: 0.5 }}
+                    }}
+                    smoothing='none' 
                 />
             </Chart>
         </View>

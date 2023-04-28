@@ -5,6 +5,7 @@ import DB from "../api/api";
 
 function HistoryListView(props) {
     const [sessions, setSessions] = useState([]);
+    // After rendering the components get the session data
     useEffect(() => {
         async function fetchData() {
             const data = await DB.session.get();
@@ -15,7 +16,7 @@ function HistoryListView(props) {
     
     return (
         <View>
-            {
+            { // if the session is empty
                 sessions.length == 0 && <Text style={{marginTop: 20, color: 'white', fontSize: 18 }}>History clear! Start working out to see your past workouts.</Text>
             }
             <FlatList
