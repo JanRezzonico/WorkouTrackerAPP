@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet, Dimensions, SafeAreaView, ScrollView, TouchableOpacity, FlatList, SectionList, Modal } from "react-native";
 import { useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import TemplateItemView from "./components/TemplateItemView";
+//import TemplateItemView from "./components/TemplateItemView";
 import CreateWorkoutModelView from "../CreateWorkoutModelView";
 import StartedWorkout from "./StartedWorkout";
 import WTButton from "../wt/WTButton";
@@ -111,9 +111,9 @@ const normalFont = Dimensions.get('window').width * 0.034;
 const subTitleFont = Dimensions.get('window').width * 0.045;
 
 
+
 const headerComponent = () => {
     const [modalVisible, setModalVisible] = useState(false);
-    const [modal2Visible, setModal2Visible] = useState(false);
 
     return (
         <View style={styles.container}>
@@ -137,7 +137,8 @@ const headerComponent = () => {
                         transparent={true}
                         onRequestClose={() => {
                             setModalVisible(!modalVisible);
-                        }}>
+                        }}
+                    >
                         {/* Pop-up content*/}
                         <View style={styles.popUpCenter}>
                             <View style={styles.popUp}>
@@ -195,8 +196,7 @@ function StartWorkoutView(props) {
     return (
         <View>
             <SafeAreaView style={styles.mainContainer}>
-                <Text>Non ci credo</Text>
-                <FlatList
+                {<FlatList
                     data={customTemplates}
                     renderItem={(e) => {
                         return (
@@ -205,13 +205,35 @@ function StartWorkoutView(props) {
                     }}
                     ListHeaderComponent={headerComponent}
                     ListFooterComponent={footerComponent}
-                />
+                />}
             </SafeAreaView>
         </View>
     );
 }
 
-const WOProgressModal = ({ visible, onClose }) => {
+function TemplateItemView(props) {
+    const [modal2Visible, setModal2Visible] = useState(false);
+
+    return (
+        <TouchableOpacity onPress={() => setModal2Visible(true)} style={styles.woTemplate}>
+            <Text style={styles.templateTitle}>{props.template.item.title}</Text>
+            
+            <WOProgressModal visible={modal2Visible} onclose={() => setModal2Visible(!modal2Visible)} workout={props.template.item}/>
+
+            <FlatList // List of Exercises like 3xSquat, 3xCurl
+                data={props.template.item.exercises}
+                renderItem={(e) => {
+                    return (
+                        <Text style={styles.templateEx}>{e.item.sets.length} x {e.item.name}</Text>
+                    );
+                }}
+            />
+        </TouchableOpacity>
+    );
+}
+
+const WOProgressModal = ({ visible, onClose, workout }) => {
+    const [modal3Visible, setModal3Visible] = useState(false);
     return (
         <Modal
             visible={visible}
@@ -222,20 +244,19 @@ const WOProgressModal = ({ visible, onClose }) => {
             <View style={styles.popUpCenter}>
                 <View style={styles.popUp}>
                     {/** insert json here.. */}
-                    <StartedWorkout></StartedWorkout>
+                    <StartedWorkout workout={workout}></StartedWorkout>
                     {/* Close pop-up button */}
                     <View style={styles.popUpBtnContainer}>
                         <TouchableOpacity
                             style={[styles.popUpButton, { backgroundColor: '#80898b' }]}
-                            onPress={() => { setModal2Visible(!modalVisible); }}
+                            onPress={() => { setModal3Visible(false); }}
                         >
                             <Text style={styles.appButtonText}>Close</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.popUpButton}
                             onPress={() => {
-
-                                setModal2Visible(!modalVisible);
+                                setModal3Visible(!modal3Visible);
                             }}
                         >
                             <Text style={styles.appButtonText}>Create</Text>
