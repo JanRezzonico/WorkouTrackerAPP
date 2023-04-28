@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 //const BASE_URL = "http://10.4.25.11:3000/api";
-//const BASE_URL = "http://10.4.25.23:3000/api";
-const BASE_URL = "http://192.168.1.29:3000/api";
+const BASE_URL = "http://10.4.25.23:3000/api";
+//const BASE_URL = "http://192.168.1.29:3000/api";
 //const BASE_URL = "http://10.4.25.11:3000/api";
 const saveId = async (data) => {
     if (data._id) {

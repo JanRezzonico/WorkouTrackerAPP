@@ -52,6 +52,7 @@ function CreateWorkoutModelView(props) {
                         </View>
                         <View style={styles.card}>
                             <Text style={styles.title}>Exercises</Text>
+                            <WTHorizontalLine color="white" />
                         </View>
                     </View>
                 }

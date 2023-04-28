@@ -8,10 +8,10 @@ const ExercisePicker = ({ options, selectedOption, onSelect }) => {
 
     return (
         <View style={styles.container}>
-            {/* <TouchableOpacity onPress={() => setShowOptions(true)}>
+            <TouchableOpacity onPress={() => setShowOptions(true)}>
                 <Text style={styles.selected}>{selectedOption}</Text>
-            </TouchableOpacity> */}
-            <WTButton text={selectedOption} onPress={() => setShowOptions(true)} />
+            </TouchableOpacity>
+            {/* <WTButton text={selectedOption} onPress={() => setShowOptions(true)} /> */}
             <Modal
                 visible={showOptions}
                 animationType="slide"
@@ -21,24 +21,16 @@ const ExercisePicker = ({ options, selectedOption, onSelect }) => {
                 <SafeAreaView style={styles.modalContainer}>
                     <ScrollView>
                         {options.map((option, index) => (
-                            // <TouchableOpacity
-                            //     key={index}
-                            //     style={styles.option}
-                            //     onPress={() => {
-                            //         onSelect(option);
-                            //         setShowOptions(false);
-                            //     }}
-                            // >
-                            //     <Text style={styles.text}>{option}</Text>
-                            // </TouchableOpacity>
-                            <WTButton
+                            <TouchableOpacity
                                 key={index}
+                                style={styles.option}
                                 onPress={() => {
                                     onSelect(option);
                                     setShowOptions(false);
                                 }}
-                                text={option}
-                            ></WTButton>
+                            >
+                                <Text style={styles.text}>{option}</Text>
+                            </TouchableOpacity>
                         ))}
                     </ScrollView>
                 </SafeAreaView>

@@ -8,28 +8,28 @@ const cardW = Dimensions.get('window').width * 0.9;
 const normalFont = Dimensions.get('window').width * 0.034;
 const subTitleFont = Dimensions.get('window').width * 0.045;
 
-function TemplateItemView(props) {
-    const [modalVisible, setModalVisible] = useState(false);
+// function TemplateItemView(props) {
+//     const [modalVisible, setModalVisible] = useState(false);
 
-    return (
-        <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.woTemplate}>
-            <Text style={styles.templateTitle}>{props.template.item.title}</Text>
+//     return (
+//         <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.woTemplate}>
+//             <Text style={styles.templateTitle}>{props.template.item.title}</Text>
             
-            <WOProgressModal visible={modalVisible} onclose={setModalVisible(false)}/>
+//             <WOProgressModal visible={modalVisible} onclose={() =>setModalVisible(false)}/>
 
-            <FlatList // List of Exercises like 3xSquat, 3xCurl
-                data={props.template.item.exercises}
-                renderItem={(e) => {
-                    return (
-                        <Text style={styles.templateEx}>{e.item.sets.length} x {e.item.name}</Text>
-                    );
-                }}
-            />
-        </TouchableOpacity>
-    );
-}
+//             <FlatList // List of Exercises like 3xSquat, 3xCurl
+//                 data={props.template.item.exercises}
+//                 renderItem={(e) => {
+//                     return (
+//                         <Text style={styles.templateEx}>{e.item.sets.length} x {e.item.name}</Text>
+//                     );
+//                 }}
+//             />
+//         </TouchableOpacity>
+//     );
+// }
 
-export default TemplateItemView;
+// export default TemplateItemView;
 
 const styles = StyleSheet.create({
     woTemplate: {
