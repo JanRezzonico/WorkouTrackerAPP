@@ -30,6 +30,7 @@
     "react-native-dotenv": "^3.4.8",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-gesture-handler": "~2.8.0",
+    "react-native-logs": "^5.0.1",
     "react-native-numeric-input": "^1.9.1",
     "react-native-responsive-fontsize": "^0.5.1",
     "react-native-responsive-linechart": "^5.7.1",

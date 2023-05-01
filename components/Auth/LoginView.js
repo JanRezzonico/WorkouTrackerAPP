@@ -22,9 +22,18 @@ function LoginView(props) {
                     <View>
                         <View style={styles.card}>
                             <Text style={styles.subTitle}>Username</Text>
-                            <TextInput style={styles.inputs} value={username} onChangeText={setUsername} />
+                            <TextInput
+                                style={styles.inputs}
+                                value={username}
+                                onChangeText={setUsername}
+                            />
                             <Text style={styles.subTitle}>Password</Text>
-                            <TextInput secureTextEntry={true} style={styles.inputs} value={password} onChangeText={setPassword} />
+                            <TextInput
+                                secureTextEntry={true}
+                                style={styles.inputs}
+                                value={password}
+                                onChangeText={setPassword}
+                            />
                         </View>
                     </View>
                     <Text style={styles.error}>{message}</Text>

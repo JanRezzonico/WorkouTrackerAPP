@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, FlatList, StyleSheet, SectionList, Dimensions } from "react-native";
+import { View, StyleSheet } from "react-native";
 import ExercisesList from "./ExercisesList/ExercisesList";
 import ExercisesFilters from './ExercisesList/ExercisesFilters';
 import colors from '../../assets/style/colors';
