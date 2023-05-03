@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.MAIN
   },
   contentContainer: {
-    backgroundColor: '#626262',
+    backgroundColor: colors.MAIN,
     borderRadius: 10,
     padding: 5,
     margin: 5,
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   textTitleContainer: {
-    backgroundColor: '#2e42f8',
+    backgroundColor: colors.BLUE,
     borderRadius: 10,
     padding: 5,
     margin: 5,

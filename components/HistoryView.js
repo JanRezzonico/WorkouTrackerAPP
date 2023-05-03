@@ -12,19 +12,15 @@ const normalMargin = Dimensions.get('window').height * 0.02;
 
 
 function HistoryView(props) {
-    const [modalVisible, setModalVisible] = useState(false, page);
-    let page = "";
+    const [modalVisible, setModalVisible] = useState(false);
+    const [page, setPage] = useState("");
 
-    function setPage(param) {
-        page = param;
-    }
-
-    // return the correct page basaed on which button was pressed
+    // return the correct page based on which button was pressed
     function getPage() {
         if (page === "Calendar") {
-            return (<CalendarView />);
+            return <CalendarView />;
         } else if (page === "Chart") {
-            return (<HistoryChartView />);
+            return <HistoryChartView />;
         }
     }
 
@@ -34,7 +30,8 @@ function HistoryView(props) {
                 <Text style={styles.title}>Workout History</Text>
                 <WTIconButton
                     onPress={() => {
-                        setModalVisible(true, page); setPage("Calendar")
+                        setPage("Calendar");
+                        setModalVisible(true);
                     }}
                     library="Ionicons"
                     name="calendar"
@@ -42,7 +39,8 @@ function HistoryView(props) {
                 />
                 <WTIconButton
                     onPress={() => {
-                        setModalVisible(true, page); setPage("Calendar")
+                        setPage("Chart");
+                        setModalVisible(true);
                     }}
                     library="Ionicons"
                     name="stats-chart"
@@ -51,23 +49,19 @@ function HistoryView(props) {
             </View>
             <HistoryListView />
 
-            {/*
-                the component modal is used to show a pop-up when a user click on the calendar or chart button
-                this specific modal shows the user's history in a calendar and on a chart
-            */}
             <Modal
+                style="padding: 2px;"
                 animationType='fade'
                 visible={modalVisible}
                 transparent={true}
-                onRequestClose={() => { 
-                    setModalVisible(!modalVisible); 
+                onRequestClose={() => {
+                    setModalVisible(false);
                 }}
             >
-                {/* Pop-up content*/}
                 <View style={styles.popUpCenter}>
                     <View style={styles.popUp}>
-                        <View>{getPage()}</View>
-                        <WTButton onPress={() => { setModalVisible(!modalVisible); }} text="Close"/>
+                        {getPage()}
+                        <WTButton onPress={() => { setModalVisible(false); }} text="Close" />
                     </View>
                 </View>
             </Modal>

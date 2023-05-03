@@ -19,9 +19,13 @@ function TabMenu(props) {
     }, []);
     const Tab = createBottomTabNavigator();
     return (
-        <Tab.Navigator initialRouteName='StartWorkoutView'> 
+        <Tab.Navigator initialRouteName='StartWorkoutView'
+            //this removes the header in all files
+            screenOptions={{
+                //headerShown: false
+            }}>
             <Tab.Screen
-                name="ProfileView"
+                name="Profile"
                 component={ProfileView}
                 options={{
                     tabBarIcon: ({ color, size }) => (
@@ -29,7 +33,7 @@ function TabMenu(props) {
                     ),
                 }} />
             <Tab.Screen
-                name="StartWorkoutView"
+                name="Start workout"
                 // children={props => <StartWorkoutView text={"Prop StartWorkoutView"} {...props}
                 component={StartWorkoutView}
                 options={{
@@ -37,9 +41,9 @@ function TabMenu(props) {
                         <AntDesign name="plussquareo" size={size} color={color} />
                     ),
                 }}
-                />
+            />
             <Tab.Screen
-                name="HistoryView"
+                name="History"
                 component={HistoryView}
                 options={{
                     tabBarIcon: ({ color, size }) => (
@@ -47,7 +51,7 @@ function TabMenu(props) {
                     ),
                 }} />
             <Tab.Screen
-                name="ExercisesView"
+                name="Exercises"
                 component={ExercisesView}
                 options={{
                     tabBarIcon: ({ color, size }) => (

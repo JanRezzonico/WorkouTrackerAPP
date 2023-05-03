@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, SectionList } from "react-native";
 import ExerciseListItem from "./ExerciseListItem";
 import InfoModal from "./InfoModal";
 import { sectionize } from "./Model";
-
+import colors from '../../../assets/style/colors';
 
 
 function ExercisesList({ data, onItemPress }) {
@@ -43,7 +43,7 @@ function ExercisesList({ data, onItemPress }) {
 
 const styles = StyleSheet.create({
     contentContainer: {
-        backgroundColor: '#626262',
+        backgroundColor: colors.MAIN,
         borderRadius: 10,
         padding: 5,
         margin: 5,
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     textTitleContainer: {
-        backgroundColor: '#2e42f8',
+        backgroundColor: colors.BLUE,
         borderRadius: 10,
         padding: 5,
         margin: 5,
