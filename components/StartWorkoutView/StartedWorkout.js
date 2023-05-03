@@ -12,7 +12,7 @@ const cardWidth = Dimensions.get('window').width * 0.9;
 
 const StartedWorkout = ({ workout }) => {
 
-    console.log(workout);
+    //console.log(workout);
     //console.log(workout.title);
     //console.log(workout.exercises);
     const [exId, setExId] = useState(0);
@@ -27,17 +27,23 @@ const StartedWorkout = ({ workout }) => {
     const options = data.exercises.map(exercise => exercise.name);
 
     useEffect(() => {
+        
         function initialize() {
-            workout.exercises.forEach(ex => {
-                () => {
-                    setExList([{ id: exId, selectedOption: workout.exercises.name }]);
-                    console.log(n);
-                }
+            //console.log("Nayt");
+            (workout.exercises).forEach(ex => { 
+                console.log(ex);
+                var nextId = exId + 1;
+                setExId(nextId);
+                setExList([{ id: nextId, selectedOption: ex.name }]);
+                ex.sets.forEach(set => {
+                    var nextSetId = setId + 1;
+                    setSetId(nextSetId);
+                    setExProp([{id: nextSetId, exId: nextId, kg: set.weight, rep: set.reps}]);
+                });
             });
-        } initialize()
-    }
-        , []
-    );
+        } 
+        initialize();
+    }, []);
 
     const Timer = () => {
         const [seconds, setSeconds] = useState(0);
@@ -87,7 +93,8 @@ const StartedWorkout = ({ workout }) => {
                         <View style={styles.card}>
                             <View style={styles.timerContainer}>
                                 <Text style={styles.title}>Name</Text>
-                                <Text  style={styles.timer}></Text><Timer></Timer>
+                                <Text style={styles.timer}></Text>
+                                <Timer></Timer>
                             </View>
                             <WTHorizontalLine color="white" />
                             <TextInput
@@ -146,8 +153,7 @@ const StartedWorkout = ({ workout }) => {
                                             </View>
                                         );
                                     }
-                                }
-                                }
+                                }}
                                 keyExtractor={item => item.id}
                             />
                             <TouchableOpacity onPress={() => { addSet(item.id) }} style={[styles.addBtn, { backgroundColor: '#7c868b' }]}>

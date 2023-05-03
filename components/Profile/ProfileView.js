@@ -34,7 +34,7 @@ function ProfileView(props) {
             <ScrollView>
                 <View>
                     <View style={styles.header}>
-                        <Image source={user.imagePath ? { uri: user.imagePath } : require('../../assets/blank-profile-picture.png')} style={styles.profileImg} />
+                        <Image accessibilityLabel='Profile picture' source={user.imagePath ? { uri: user.imagePath } : require('../../assets/blank-profile-picture.png')} style={styles.profileImg} />
                         <Text style={styles.userName}>{user.username}</Text>
                     </View>
                     <View style={styles.contents}>

@@ -15,6 +15,9 @@ function CreateWorkoutModelView(props) {
     //let exId = 1;
     // exId is used to set an uinique ID to each exercise
     const [exId, setExId] = useState(0);
+    // setId is used to set an uinique ID to each set
+    const [setId, setSetId] = useState(0);
+
     const [modalVisible, setModalVisible] = useState(false);
     const [name, setName] = useState('New Workout');
     // List of exercise
@@ -31,13 +34,19 @@ function CreateWorkoutModelView(props) {
         setExList(prevExList => prevExList.filter(ex => ex.id !== id));
     }
 
-    //This function is used to add an exercise's name to the exList
+    //This function is used to add an exercise's name in to the exList
     function addEx() {
         var nextId = exId+1;
         setExId(nextId);
         setExList([...exList, { id: nextId, selectedOption: "Select an option" }]);
     }
 
+    //This function is used to add a set in an exercise in to the exProp
+    const addSet = (id) => {
+        var nextId = setId + 1;
+        setSetId(nextId);
+        setExProp([...exProp, { id: nextId, exId: id, kg: "", reps: "" }]);
+    }
     return (
         <SafeAreaView style={styles.mainContainer}>
             <FlatList data={exList}
@@ -87,23 +96,33 @@ function CreateWorkoutModelView(props) {
                             Exercise picker + remove button  
                         */}
                         <View style={{flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row'}}>
-                                <TextInput
-                                    style={styles.exProp}
-                                    maxLength={3}
-                                    placeholder='kg'
-                                    placeholderTextColor={'#aaa'}
-                                    keyboardType='numeric'
-                                />
-                                <TextInput
-                                    style={styles.exProp}
-                                    maxLength={3}
-                                    placeholder='reps'
-                                    placeholderTextColor={'#aaa'}
-                                    keyboardType='numeric'
-                                />
-                            </View>
-                            <TouchableOpacity onPress={() => { /*addSet()*/null }} style={[styles.addBtn,{backgroundColor:'#7c868b'}]}>
+                            {/*Sets List*/}
+                            <FlatList data={exProp}
+                                renderItem={({ item: innerItem }) => {
+                                    if (item.id === innerItem.exId) {
+                                        return (
+                                            <View style={{ flexDirection: 'row' }}>
+                                                <TextInput
+                                                    style={styles.exProp}
+                                                    maxLength={3}
+                                                    placeholder='kg'
+                                                    placeholderTextColor={'#aaa'}
+                                                    keyboardType='numeric'
+                                                />
+                                                <TextInput
+                                                    style={styles.exProp}
+                                                    maxLength={3}
+                                                    placeholder='reps'
+                                                    placeholderTextColor={'#aaa'}
+                                                    keyboardType='numeric'
+                                                />
+                                            </View>
+                                        );
+                                    }
+                                }}
+                                keyExtractor={item => item.id}
+                            />
+                            <TouchableOpacity onPress={() => { addSet(item.id) }} style={[styles.addBtn,{backgroundColor:'#7c868b'}]}>
                                 <View style={styles.horizontalText}>
                                     <Text style={styles.appButtonText}>Add set</Text>
                                     <Icon name='add-outline' style={styles.btnIcon} />

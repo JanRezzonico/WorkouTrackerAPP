@@ -223,7 +223,7 @@ const TemplateItemView = (props) => {
         <TouchableOpacity onPress={() => setModal2Visible(true)} style={styles.woTemplate}>
             <Text style={styles.templateTitle}>{props.template.item.title}</Text>
             
-            <WOProgressModal visible={modal2Visible} onclose={() => setModal2Visible(!modal2Visible)} workout={props.template.item}/>
+            <WOProgressModal modalVisible={modal2Visible} setModalVisible={setModal2Visible} onclose={() => setModal2Visible(!modal2Visible)} workout={props.template.item}/>
 
             <FlatList // List of Exercises like 3xSquat, 3xCurl
                 data={props.template.item.exercises}
@@ -237,12 +237,12 @@ const TemplateItemView = (props) => {
     );
 }
 
-const WOProgressModal = ({ visible, onClose, workout }) => {
-    const [modal3Visible, setModal3Visible] = useState(false);
+const WOProgressModal = ({ setModalVisible, modalVisible, onClose, workout }) => {
     return (
         <Modal
-            visible={visible}
+            visible={modalVisible}
             animationType="fade"
+            transparent={true}
             onRequestClose={onClose}
         >
             {/* Pop-up content*/}
@@ -254,14 +254,16 @@ const WOProgressModal = ({ visible, onClose, workout }) => {
                     <View style={styles.popUpBtnContainer}>
                         <TouchableOpacity
                             style={[styles.popUpButton, { backgroundColor: '#80898b' }]}
-                            onPress={() => { setModal3Visible(false); }}
+                            onPress={() => {
+                                setModalVisible(!modalVisible)
+                            }}
                         >
                             <Text style={styles.appButtonText}>Close</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.popUpButton}
                             onPress={() => {
-                                setModal3Visible(!modal3Visible);
+                                setModalVisible(!modalVisible)
                             }}
                         >
                             <Text style={styles.appButtonText}>Create</Text>
