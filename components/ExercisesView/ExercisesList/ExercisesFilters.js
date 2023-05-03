@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { StyleSheet } from "react-native";
 import { SearchBar } from '@rneui/themed';
 import { filter, getDistinct } from './Model';
 
@@ -19,6 +20,8 @@ function ExercisesFilters(props) {
 
     return (
         <SearchBar
+            containerStyle={styles.searchBar}
+            inputContainerStyle={styles.input}
             placeholder="Type Here..."
             onChangeText={setSearch}
             onEndEditing={handleUpdateData}
@@ -29,5 +32,16 @@ function ExercisesFilters(props) {
         />
     );
 }
+
+const styles = StyleSheet.create({
+    searchBar: {
+        backgroundColor: '#293237',
+        borderBottomColor: '#293237'
+    },
+    input: {
+        backgroundColor: '#f9f9f9',
+        
+    }
+  });
 
 export default ExercisesFilters;
