@@ -12,6 +12,7 @@ import { logger, consoleTransport } from "react-native-logs";
 //const BASE_URL = "https://workoutracker-5xep.onrender.com/api";
 const BASE_URL = "http://192.168.1.113:3000/api";
 
+import constants from "../constants/constants";
 
 const defaultConfig = {
     levels: {
@@ -55,7 +56,7 @@ const DB = {
     user: {
         async get() {
             try {
-                const response = await fetch(`${BASE_URL}/user/${global.USER_ID}`);
+                const response = await fetch(`${constants.BASE_URL}/user/${global.USER_ID}`);
                 const data = await response.json();
                 LOG.info(`User data retrieved: ${JSON.stringify(data)}`);
                 return data;
@@ -66,7 +67,7 @@ const DB = {
         },
         async post(user) {
             try {
-                const response = await fetch(`${BASE_URL}/user`, {
+                const response = await fetch(`${constants.BASE_URL}/user`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -83,7 +84,7 @@ const DB = {
         },
         async update(user) {
             try {
-                const response = await fetch(`${BASE_URL}/user/${global.USER_ID}`, {
+                const response = await fetch(`${constants.BASE_URL}/user/${global.USER_ID}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
@@ -102,7 +103,7 @@ const DB = {
     session: {
         async get() {
             try {
-                const response = await fetch(`${BASE_URL}/session/${global.USER_ID}`);
+                const response = await fetch(`${constants.BASE_URL}/session/${global.USER_ID}`);
                 const data = await response.json();
                 LOG.info(`Session data retrieved: ${JSON.stringify(data)}`);
                 return data;
@@ -113,7 +114,7 @@ const DB = {
         },
         async post(session) {
             try {
-                const response = await fetch(`${BASE_URL}/session`, {
+                const response = await fetch(`${constants.BASE_URL}/session`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -132,7 +133,7 @@ const DB = {
     auth: {
         async login(username, password) {
             try {
-                const response = await fetch(`${BASE_URL}/auth/login`, {
+                const response = await fetch(`${constants.BASE_URL}/auth/login`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -150,7 +151,7 @@ const DB = {
         },
         async signup(user) {
             try {
-                const response = await fetch(`${BASE_URL}/auth/register`, {
+                const response = await fetch(`${constants.BASE_URL}/auth/register`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

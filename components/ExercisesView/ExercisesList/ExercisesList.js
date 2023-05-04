@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Text, View, StyleSheet, SectionList } from "react-native";
 import ExerciseListItem from "./ExerciseListItem";
 import InfoModal from "./InfoModal";
@@ -14,9 +14,10 @@ function ExercisesList({ data, onItemPress }) {
         setVisible(true);
     }
 
+    const MemoedExerciseListItem = React.memo(ExerciseListItem); //Improves performance
     const renderItem = ({ item }) => {
         return (
-            <ExerciseListItem exercise={item} openInfoModal={openInfoModal} />
+            <MemoedExerciseListItem exercise={item} openInfoModal={openInfoModal} />
         );
     };
     const renderSectionHeader = ({ section }) => {

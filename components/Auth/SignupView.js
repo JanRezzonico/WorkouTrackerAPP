@@ -1,15 +1,13 @@
 import { useState } from 'react';
-import { Text, View, StyleSheet, Image, Dimensions, TextInput, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, TextInput, SafeAreaView, ScrollView } from 'react-native';
 import NumericInput from 'react-native-numeric-input'
-import DB from '../../api/api';
 import colors from '../../assets/style/colors';
 import WTButton from '../wt/WTButton';
 import WTDatePicker from '../wt/WTDatePicker';
-import { Ionicons } from '@expo/vector-icons';
-import defaults from '../../constants/constants';
 import constants from '../../constants/constants';
 import WTIconButton from '../wt/WTIconButton';
 import { handleSignup } from './Model';
+import { useRef } from 'react';
 
 function SignupView(props) {
     const [name, setName] = useState('');
@@ -20,6 +18,7 @@ function SignupView(props) {
     const [height, setHeight] = useState(null);
     const [date, setDate] = useState(new Date());
     const [message, setMessage] = useState('');
+    const placeholderTextColor = colors.TEXT + "80"; //Add alpha 0.5 to the hex color
 
     return (
         <SafeAreaView style={styles.mainContainer}>
@@ -32,18 +31,24 @@ function SignupView(props) {
                         style={styles.inputs}
                         value={name}
                         onChangeText={text => setName(text)}
+                        placeholder='Name'
+                        placeholderTextColor={placeholderTextColor}
                     />
                     <Text style={styles.subTitle}>Surname</Text>
                     <TextInput
                         style={styles.inputs}
                         value={surname}
                         onChangeText={text => setSurname(text)}
+                        placeholder='Surname'
+                        placeholderTextColor={placeholderTextColor}
                     />
                     <Text style={styles.subTitle}>Username</Text>
                     <TextInput
                         style={styles.inputs}
                         value={username}
                         onChangeText={text => setUsername(text)}
+                        placeholder='Username'
+                        placeholderTextColor={placeholderTextColor}
                     />
                     <Text style={styles.subTitle}>Password</Text>
                     <TextInput
@@ -51,9 +56,13 @@ function SignupView(props) {
                         secureTextEntry={true}
                         value={password}
                         onChangeText={text => setPassword(text)}
+                        placeholder='Password'
+                        placeholderTextColor={placeholderTextColor}
                     />
-                    <Text style={styles.subTitle}>Weight (in kg)</Text>
+                    <Text style={styles.subTitle}>Weight [{constants.WEIGHT_MIN} - {constants.WEIGHT_MAX}kg]</Text>
                     <NumericInput
+                        containerStyle={styles.numericInputs}
+                        inputStyle={styles.numericInputs}
                         value={weight}
                         onChange={(value) => setWeight(value)}
                         minValue={constants.WEIGHT_MIN}
@@ -61,13 +70,14 @@ function SignupView(props) {
                         type='up-down'
                         rounded
                         upDownButtonsBackgroundColor={colors.MAIN}
-                        iconStyle={{ color: 'white', fontWeight: 'bold' }}
-                        textColor={'white'}
+                        iconStyle={{ color: colors.TEXT }}
+                        textColor={colors.TEXT}
                         valueType='real'
                     />
-                    <Text style={styles.subTitle}>Height (in cm)</Text>
+                    <Text style={styles.subTitle}>Height [{constants.HEIGHT_MIN} - {constants.HEIGHT_MAX}cm]</Text>
                     <NumericInput
-                        style={styles.inputs}
+                        containerStyle={styles.numericInputs}
+                        inputStyle={styles.numericInputs}
                         value={height}
                         onChange={(value) => setHeight(value)}
                         minValue={constants.HEIGHT_MIN}
@@ -75,8 +85,8 @@ function SignupView(props) {
                         type='up-down'
                         rounded
                         upDownButtonsBackgroundColor={colors.MAIN}
-                        iconStyle={{ color: 'white', fontWeight: 'bold' }}
-                        textColor={'white'}
+                        iconStyle={{ color: colors.TEXT }}
+                        textColor={colors.TEXT}
                         valueType='integer'
                     />
                     <Text style={styles.subTitle}>Birthday</Text>
@@ -123,7 +133,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: Dimensions.get('window').width * 0.06,
-        color: 'white',
+        color: colors.TEXT,
         alignSelf: 'center',
         textAlign: 'center',
         padding: 17,
@@ -147,21 +157,25 @@ const styles = StyleSheet.create({
         marginBottom: 7,
         fontSize: Dimensions.get('window').width * 0.04,
         textAlign: 'justify',
-        color: 'white',
+        color: colors.TEXT,
     },
     normalText: {
         fontSize: Dimensions.get('window').width * 0.04,
-        color: 'white',
+        color: colors.TEXT,
     },
     inputs: {
         borderWidth: 1,
         borderColor: '#636363',
         marginHorizontal: Dimensions.get('window').width * 0.3,
         width: Dimensions.get('window').width * 0.5,
+        height: Dimensions.get('window').height * 0.05,
         borderRadius: 7,
-        color: 'white',
-        fontSize: 13,
+        color: colors.TEXT,
         paddingHorizontal: 7,
+    },
+    numericInputs: {
+        borderColor: '#636363',
+        height: Dimensions.get('window').height * 0.05,
     },
     appButtonContainer: {
         elevation: 8,
@@ -176,7 +190,7 @@ const styles = StyleSheet.create({
     },
     appButtonText: {
         fontSize: 18,
-        color: 'white',
+        color: colors.TEXT,
         fontWeight: 'bold',
         alignSelf: 'center',
         textTransform: 'uppercase'

@@ -9,9 +9,10 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Feather } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
+import constants from '../../constants/constants';
+import WTIconButton from './WTIconButton';
 
 const WTDatePicker = ({ date, setDate }) => {
-    const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
 
     const onChange = (event, selectedDate) => {
@@ -33,10 +34,10 @@ const WTDatePicker = ({ date, setDate }) => {
             {show && (
                 <DateTimePicker
                     value={date}
-                    mode={mode}
+                    mode={'date'}
                     onChange={onChange}
                     maximumDate={new Date()}
-                    minimumDate={new Date(1900, 0, 1)}
+                    minimumDate={constants.DATE_MIN}
                 />
             )}
         </View>
