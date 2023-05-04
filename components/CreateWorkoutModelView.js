@@ -6,12 +6,14 @@ import WTHorizontalLine from "./wt/WTHorizontalLine";
 import ExercisePicker from './ExercisePicker';
 import colors from '../assets/style/colors';
 import WTIconButton from './wt/WTIconButton';
+import WTButton from './wt/WTButton';
+import { useEffect } from 'react';
 
 const normalMargin = Dimensions.get('window').height * 0.02;
 const cardWidth = Dimensions.get('window').width * 0.9;
 
 
-function CreateWorkoutModelView(props) {
+function CreateWorkoutModelView({onNameChange, onExListChange, onExPropChange}) {
     //let exId = 1;
     // exId is used to set an uinique ID to each exercise
     const [exId, setExId] = useState(0);
@@ -23,7 +25,7 @@ function CreateWorkoutModelView(props) {
     // List of exercise
     const [exList, setExList] = useState([{ id: exId, selectedOption: "Select an option" }]);
     // List of sets and kg, with the ID of the exercise
-    const [exProp, setExProp] = useState([{ id: exId, kg:0, rep:0 }])
+    const [exProp, setExProp] = useState([{ id: setId, exId: exId, kg:0, rep:0 }]);
     // exercise selected from the picker
     const [selectedOption, setSelectedOption] = useState('Select an option');
     const data = require('../assets/json/exercises.json');
@@ -47,6 +49,19 @@ function CreateWorkoutModelView(props) {
         setSetId(nextId);
         setExProp([...exProp, { id: nextId, exId: id, kg: "", reps: "" }]);
     }
+
+    useEffect(() => {
+        onExListChange(exList);
+    }, [exList, onExListChange]);
+
+    useEffect(() => {
+        onExPropChange(exList);
+    }, [exProp, onExPropChange]);
+
+    useEffect(() => {
+        onNameChange(name);
+    }, [name, onNameChange]);
+
     return (
         <SafeAreaView style={styles.mainContainer}>
             <FlatList data={exList}
@@ -68,7 +83,7 @@ function CreateWorkoutModelView(props) {
                         </View>
                     </View>
                 }
-                renderItem={({ item }) => 
+                renderItem={({ item }) =>
                     <View style={styles.exercise}>
                         {/* 
                             Start
@@ -93,7 +108,7 @@ function CreateWorkoutModelView(props) {
                         </View>
                         {/* 
                             End 
-                            Exercise picker + remove button  
+                            Exercise picker + remove button
                         */}
                         <View style={{flexDirection: 'column'}}>
                             {/*Sets List*/}
@@ -123,21 +138,18 @@ function CreateWorkoutModelView(props) {
                                 keyExtractor={item => item.id}
                             />
                             <TouchableOpacity onPress={() => { addSet(item.id) }} style={[styles.addBtn,{backgroundColor:'#7c868b'}]}>
-                                <View style={styles.horizontalText}>
-                                    <Text style={styles.appButtonText}>Add set</Text>
-                                    <Icon name='add-outline' style={styles.btnIcon} />
-                                </View>
+                                <Text style={styles.appButtonText}>Add set</Text>
+                                <Icon name='add-outline' style={styles.btnIcon} />
                             </TouchableOpacity>
                         </View>
+                        <WTHorizontalLine color='white'/>
                     </View>
                 }
                 ListFooterComponent={
                     <View>
                         <TouchableOpacity onPress={() => { addEx() }} style={[styles.addBtn,{marginVertical:normalMargin}]}>
-                            <View style={styles.horizontalText}>
-                                <Text style={styles.appButtonText}>Add exercise</Text>
-                                <Icon name='add-outline' style={styles.btnIcon} />
-                            </View>
+                            <Text style={styles.appButtonText}>Add exercise</Text>
+                            <Icon name='add-outline' style={styles.btnIcon} />
                         </TouchableOpacity>
                     </View>
                     
@@ -198,7 +210,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: 'white',
         fontWeight: '500',
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
     },
     btnIcon: {
         fontSize: 18,
@@ -232,5 +244,5 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 12,
         overflow: 'hidden'
-    }
+    },
 });

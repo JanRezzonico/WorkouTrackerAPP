@@ -7,6 +7,8 @@ import StartedWorkout from "./StartedWorkout";
 import WTButton from "../wt/WTButton";
 import colors from "../../assets/style/colors";
 import WTIconButton from "../wt/WTIconButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect } from "react";
 
 const customTemplates = [
     {
@@ -110,20 +112,39 @@ const normalMargin = Dimensions.get('window').height * 0.015;
 const cardW = Dimensions.get('window').width * 0.9;
 const normalFont = Dimensions.get('window').width * 0.034;
 const subTitleFont = Dimensions.get('window').width * 0.045;
+//let templates = [];
+
 
 function StartWorkoutView(props) {
+    const [templates, setTemplates] = useState([]);
+    useEffect(() => {
+        var value = null;
+        const loadCustomTemplates = async () => {
+            value = await AsyncStorage.getItem('templates');
+            value = JSON.parse(value);
+            displayCustomTemplates(value);
+        }
+        const displayCustomTemplates = (value) => {
+            if(value !== null){
+                setTemplates(value);
+                console.log(templates);
+                // console.log(customTemplates);
+            }
+        }
+        loadCustomTemplates();
+    },[]);
     return (
         <View>
             <SafeAreaView style={styles.mainContainer}>
                 {
                     <FlatList
-                        data={customTemplates}
+                        data={templates}
                         renderItem={(e) => {
                             return (
                                 <TemplateItemView template={e} />
                             );
                         }}
-                        ListHeaderComponent={headerComponent}
+                        ListHeaderComponent={<HeaderComponent templates={templates} setTemplates={setTemplates}/>}
                         ListFooterComponent={footerComponent}
                     />
                 }
@@ -136,14 +157,50 @@ function StartWorkoutView(props) {
     The headerComponent display the Quick start section and the custom templates title
     Is a component of the FlatList in the main function
 */
-const headerComponent = () => {
+const HeaderComponent = ({templates, setTemplates}) => {
     const [modalVisible, setModalVisible] = useState(false);
+    const [exList, setExList] = useState([]);
+    const [exProp, setExProp] = useState([]);
+    const [workoutName, setWorkoutName] = useState("");
+    
 
+    const handleExListChange = (exList) => {
+        setExList(exList);
+    };
+    
+    const handleExPropChange = (exProp) => {
+        setExProp(exProp);
+    };
+
+    const handleNameChange = (workoutName) => {
+        setWorkoutName(workoutName);
+    };
+
+    const  saveTemplate = () => {
+        var newTemplate = {title: workoutName, exercises: []};
+        var counter = 0;
+        exList.forEach((ex) => {
+            //newTemplate.exercises[counter].name = ex.selectedOption;
+            var temp = {name: ex.selectedOption, sets:[]};
+            exProp.forEach((prop) => {
+                if(ex.id === prop.exId){
+                    //newTemplate.exercises[counter].sets.push(prop);
+                    temp.sets.push(prop);
+                }
+            })
+            newTemplate.exercises.push(temp);
+            counter++;
+        })
+        console.log(newTemplate);
+        console.log(newTemplate.exercises[0].sets);
+        setTemplates(...templates,newTemplate);
+        AsyncStorage.setItem('templates',JSON.stringify(templates));
+    };
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.subtitle}>Quick Start</Text>
-                <WTButton onPress={() => null} text={"Start Empty Workout"}></WTButton>
+                <WTButton onPress={async () => {var provaprova = await AsyncStorage.getItem('templates'); console.log(provaprova); console.log("Templates: "+templates);}} text={"Start Empty Workout"}></WTButton>
             </View>
             <View style={styles.contents}>
                 <View style={styles.addTemplate}>
@@ -163,7 +220,7 @@ const headerComponent = () => {
                         {/* Pop-up content*/}
                         <View style={styles.popUpCenter}>
                             <View style={styles.popUp}>
-                                <CreateWorkoutModelView weight={70} height={1.70} />
+                                <CreateWorkoutModelView weight={70} height={1.70} onNameChange={handleNameChange} onExListChange={handleExListChange} onExPropChange={handleExPropChange}/>
                                 {/* Close pop-up button */}
                                 <View style={styles.popUpBtnContainer}>
                                     <TouchableOpacity
@@ -174,7 +231,10 @@ const headerComponent = () => {
                                     </TouchableOpacity>
                                     <TouchableOpacity
                                         style={styles.popUpButton}
-                                        onPress={() => {setModalVisible(!modalVisible);}}
+                                        onPress={() => {
+                                            saveTemplate();
+                                            setModalVisible(!modalVisible);
+                                        }}
                                     >
                                         <Text style={styles.appButtonText}>Create</Text>
                                     </TouchableOpacity>
@@ -249,7 +309,7 @@ const WOProgressModal = ({ setModalVisible, modalVisible, onClose, workout }) =>
             <View style={styles.popUpCenter}>
                 <View style={styles.popUp}>
                     {/** insert json here.. */}
-                    <StartedWorkout workout={workout}></StartedWorkout>
+                    <StartedWorkout workout={workout}/>
                     {/* Close pop-up button */}
                     <View style={styles.popUpBtnContainer}>
                         <TouchableOpacity
@@ -264,6 +324,7 @@ const WOProgressModal = ({ setModalVisible, modalVisible, onClose, workout }) =>
                             style={styles.popUpButton}
                             onPress={() => {
                                 setModalVisible(!modalVisible)
+                                
                             }}
                         >
                             <Text style={styles.appButtonText}>Create</Text>
