@@ -98,9 +98,9 @@ const styles = StyleSheet.create({
         borderColor: '#636363',
         marginHorizontal: Dimensions.get('window').width * 0.3,
         width: Dimensions.get('window').width * 0.5,
+        height: Dimensions.get('window').height * 0.05,
         borderRadius: 7,
-        color: 'white',
-        fontSize: 13,
+        color: colors.TEXT,
         paddingHorizontal: 7,
     },
     appButtonContainer: {

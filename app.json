@@ -18,14 +18,20 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "This app needs access to your photo library to select pictures."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/wt-icon-bg.png",
         "backgroundColor": "#293237"
       },
-      "package": "com.workoutracker.workoutracker"
+      "package": "com.workoutracker.workoutracker",
+      "permissions": [
+        "CAMERA_ROLL"
+      ]
     },
     "web": {
       "favicon": "./assets/wt-icon-bg.png"

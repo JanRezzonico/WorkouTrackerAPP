@@ -5,6 +5,7 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import { NavigationContainer } from '@react-navigation/native';
 import TabMenu from './components/TabMenu';
 import WelcomeView from './components/WelcomeView';
+import constants from './constants/constants';
 function App() {
 
     const [isLoaded, setIsLoaded] = useState(false);
@@ -33,26 +34,16 @@ function App() {
             const value = await AsyncStorage.getItem('_id');
             global.USER_ID = value;
         };
-
-
-
-
-
-        //This is just for testing, do not keep this in deploy
-        const removeData = async () => {
-          try {
-            await AsyncStorage.removeItem('_id');
-          } catch (e) {
-            // Error removing data
-          }
-        };
-        //removeData();
-
-
-
-
-
-
+        if (constants.DELETE_USER_ID) {
+            const removeData = async () => {
+                try {
+                    await AsyncStorage.removeItem('_id');
+                } catch (e) {
+                    // Error removing data
+                }
+            };
+            removeData();
+        }
         setUserId();
         changeScreenOrientation();
         checkIfUserIsLoggedIn();

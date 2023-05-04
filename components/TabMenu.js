@@ -1,12 +1,12 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons, FontAwesome5, FontAwesome, MaterialCommunityIcons, MaterialIcons, AntDesign, Entypo, Feather } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import React, { useState, useEffect } from 'react';
 import ExercisesView from './ExercisesView/ExercisesView';
 import HistoryView from './HistoryView';
 import ProfileView from './Profile/ProfileView';
 import StartWorkoutView from './StartWorkoutView/StartWorkoutView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Text } from 'react-native';
+import colors from '../assets/style/colors';
 
 function TabMenu(props) {
     useEffect(() => {
@@ -20,9 +20,13 @@ function TabMenu(props) {
     const Tab = createBottomTabNavigator();
     return (
         <Tab.Navigator initialRouteName='StartWorkoutView'
-            //this removes the header in all files
             screenOptions={{
-                //headerShown: false
+                tabBarShowLabel: false,
+                tabBarActiveBackgroundColor: colors.BLUE,
+                tabBarActiveTintColor: colors.TEXT,
+                tabBarInactiveTintColor: colors.MAIN,
+                headerTintColor: colors.BLUE,
+                headerTitleAlign: 'center',
             }}>
             <Tab.Screen
                 name="Profile"
@@ -34,7 +38,6 @@ function TabMenu(props) {
                 }} />
             <Tab.Screen
                 name="Start workout"
-                // children={props => <StartWorkoutView text={"Prop StartWorkoutView"} {...props}
                 component={StartWorkoutView}
                 options={{
                     tabBarIcon: ({ color, size }) => (

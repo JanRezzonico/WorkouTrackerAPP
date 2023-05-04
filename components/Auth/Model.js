@@ -9,7 +9,7 @@ const allValid = (user) => {
     const allFilled = Object.values(user).every((value) => !!value);
     const validHeight = isBetween(user.height, constants.HEIGHT_MIN, constants.HEIGHT_MAX);
     const validWeight = isBetween(user.weight, constants.WEIGHT_MIN, constants.WEIGHT_MAX);
-    const validBirthday = isBetween(user.birthday.getTime(), new Date(1900, 0, 1).getTime(), Date.now());
+    const validBirthday = isBetween(user.birthday.getTime(), constants.DATE_MIN.getTime(), Date.now());
     return allFilled && validHeight && validWeight && validBirthday;
 }
 

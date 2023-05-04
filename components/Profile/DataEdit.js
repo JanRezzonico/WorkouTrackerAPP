@@ -58,7 +58,8 @@ const DataEdit = ({ user, setUser, toggleEdit }) => {
             <Text style={styles.labelInfo}>Height</Text>
 
             <NumericInput
-                style={styles.input}
+                containerStyle={styles.numericInputs}
+                inputStyle={styles.numericInputs}
                 value={height}
                 onChange={(value) => setHeight(value)}
                 minValue={constants.HEIGHT_MIN}
@@ -72,7 +73,8 @@ const DataEdit = ({ user, setUser, toggleEdit }) => {
             />
             <Text style={styles.labelInfo}>Weight</Text>
             <NumericInput
-                style={styles.input}
+                containerStyle={styles.numericInputs}
+                inputStyle={styles.numericInputs}
                 value={weight}
                 onChange={(value) => setWeight(value)}
                 minValue={constants.WEIGHT_MIN}
@@ -113,16 +115,17 @@ const styles = StyleSheet.create({
     },
     input: {
         borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 4,
-        padding: 8,
+        borderColor: '#636363',
+        borderRadius: 7,
+        padding: 7,
         marginTop: 8,
         marginBottom: 16,
-        color: 'white'
+        color: colors.TEXT,
+        height: Dimensions.get('window').height * 0.05,
     },
-    datePicker: {
-        width: '100%',
-        marginBottom: 16,
+    numericInputs: {
+        borderColor: '#636363',
+        height: Dimensions.get('window').height * 0.05,
     },
     horizontalContainer: {
         alignItems: "flex-start",
