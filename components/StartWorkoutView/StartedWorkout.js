@@ -13,6 +13,10 @@ import saveWorkout from './Model';
 const normalMargin = Dimensions.get('window').height * 0.02;
 const cardWidth = Dimensions.get('window').width * 0.9;
 
+
+{/**
+    This component isn't used
+*/}
 const StartedWorkout = ({ workout = null, setWorkout, onRequestClose }) => {
     const [exId, setExId] = useState(0);
     const [setId, setSetId] = useState(0);

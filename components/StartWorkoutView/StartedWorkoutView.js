@@ -10,6 +10,10 @@ import WTButton from "../wt/WTButton";
 import ExercisePicker from "../ExercisePicker";
 import WTIconButton from "../wt/WTIconButton";
 
+
+{/*
+    This view displays a list that lets you add, remove and update exercises, sets, and the title of the workout template
+*/}
 const StartedWorkoutView = ({ workout = null, setWorkout, toggleModal }) => {
     const startDate = new Date();
     const [exercises, setExercises] = useState([]);

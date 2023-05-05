@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import colors from "../../../assets/style/colors";
 
+
+{/**
+    A simple timer function that represents the workout duration
+*/}
 const Timer = () => {
     const [seconds, setSeconds] = useState(0);
 

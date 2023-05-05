@@ -17,6 +17,9 @@ const cardW = Dimensions.get('window').width * 0.9;
 const normalFont = Dimensions.get('window').width * 0.034;
 const subTitleFont = Dimensions.get('window').width * 0.045;
 
+{/**
+    This is the main component that displays the list of the workout templates and the button to start an empty workout
+*/}
 function StartWorkoutView(props) {
     const [templates, setTemplates] = useState([]);
     //Every time the application renders the view, update the custom templates list

@@ -16,10 +16,10 @@ const cardWidth = Dimensions.get('window').width * 0.9;
 
 function CreateWorkoutModelView({onNameChange, onExListChange, onExPropChange, saveTemplate, onRequestClose}) {
     //let exId = 1;
-    // exId is used to set an uinique ID to each exercise
+    // exId is used to set an unique ID to each exercise
     const [exId, setExId] = useState(0);
 
-    // setId is used to set an uinique ID to each set
+    // setId is used to set an unique ID to each set
     const [setId, setSetId] = useState(0);
 
     const [modalVisible, setModalVisible] = useState(false);
