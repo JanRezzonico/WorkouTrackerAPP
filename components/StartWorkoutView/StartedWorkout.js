@@ -6,65 +6,51 @@ import styles from '../../assets/style/style';
 import WTHorizontalLine from "./../wt/WTHorizontalLine";
 import WTIconButton from '../wt/WTIconButton';
 import ExercisePicker from '../ExercisePicker';
+import Timer from './components/Timer';
+import WTButton from '../wt/WTButton';
+import saveWorkout from './Model';
 
 const normalMargin = Dimensions.get('window').height * 0.02;
 const cardWidth = Dimensions.get('window').width * 0.9;
 
-const StartedWorkout = ({ workout }) => {
-
-    //console.log(workout);
-    //console.log(workout.title);
-    //console.log(workout.exercises);
+const StartedWorkout = ({ workout = null, setWorkout, onRequestClose }) => {
     const [exId, setExId] = useState(0);
     const [setId, setSetId] = useState(0);
-    const [modalVisible, setModalVisible] = useState(false);
-    const [name, setName] = useState('New Workout');
     const [exList, setExList] = useState([{ id: exId, selectedOption: "Select an option" }]);
     const [exProp, setExProp] = useState([{ id: setId, exId: exId, kg: 0, rep: 0 }]);
 
-    const [selectedOption, setSelectedOption] = useState('Select an option');
+    const [exercises, setExercises] = useState([{ id: exId, selectedOption: "Select an option" }]);
+
+
     const data = require('../../assets/json/exercises.json');
     const options = data.exercises.map(exercise => exercise.name);
 
+    const setName = (newName) => {
+        setWorkout({ ...workout, name: newName });
+    }
     useEffect(() => {
-        
-        function initialize() {
-            //console.log("Nayt");
-            (workout.exercises).forEach(ex => { 
-                console.log(ex);
-                var nextId = exId + 1;
-                setExId(nextId);
-                setExList([{ id: nextId, selectedOption: ex.name }]);
-                ex.sets.forEach(set => {
-                    var nextSetId = setId + 1;
-                    setSetId(nextSetId);
-                    setExProp([{id: nextSetId, exId: nextId, kg: set.weight, rep: set.reps}]);
-                });
-            });
-        } 
-        initialize();
+        setName("New Workout");
+        if (workout) {
+            if (workout.exercises) {
+                function initialize() {
+                    setName(workout.name);
+                    (workout.exercises).forEach(ex => {
+                        var nextId = exId + 1;
+                        setExId(nextId);
+                        setExList([{ id: nextId, selectedOption: ex.name }]);
+                        ex.sets.forEach(set => {
+                            var nextSetId = setId + 1;
+                            setSetId(nextSetId);
+                            setExProp([{ id: nextSetId, exId: nextId, kg: set.weight, rep: set.reps }]);
+                        });
+                    });
+                }
+                initialize();
+            }
+        }
     }, []);
 
-    const Timer = () => {
-        const [seconds, setSeconds] = useState(0);
 
-        useEffect(() => {
-            const interval = setInterval(() => {
-                setSeconds(seconds => seconds + 1);
-            }, 1000);
-            return () => clearInterval(interval);
-        }, []);
-
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds - (hours * 3600)) / 60);
-        const formattedSeconds = seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60;
-
-        return (
-            <View>
-                <Text style={styles.timer}> Time: {hours}:{minutes < 10 ? `0${minutes}` : minutes}:{formattedSeconds}</Text>
-            </View>
-        );
-    };
 
     //This function is used to remove an exercise's name by his index from the exList
     const rmEx = (id) => {
@@ -82,7 +68,6 @@ const StartedWorkout = ({ workout }) => {
         var nextId = setId + 1;
         setSetId(nextId);
         setExProp([...exProp, { id: nextId, exId: id, kg: "", reps: "" }]);
-        console.log(nextId);
     }
 
     return (
@@ -94,12 +79,12 @@ const StartedWorkout = ({ workout }) => {
                             <View style={styles.timerContainer}>
                                 <Text style={styles.title}>Name</Text>
                                 <Text style={styles.timer}></Text>
-                                <Timer></Timer>
+                                <Timer />
                             </View>
                             <WTHorizontalLine color="white" />
                             <TextInput
                                 style={styles.inputs}
-                                value={workout.title}
+                                value={workout ? workout.name : "New Workout"}
                                 placeholderTextColor={'#aaa'}
                                 onChangeText={text => setName(text)}
                             />
@@ -156,25 +141,18 @@ const StartedWorkout = ({ workout }) => {
                                 }}
                                 keyExtractor={item => item.id}
                             />
-                            <TouchableOpacity onPress={() => { addSet(item.id) }} style={[styles.addBtn, { backgroundColor: '#7c868b' }]}>
-                                <View style={styles.horizontalText}>
-                                    <Text style={styles.appButtonText}>Add set</Text>
-                                    <Icon name='add-outline' style={styles.btnIcon} />
-                                </View>
-                            </TouchableOpacity>
+                            <WTButton onPress={() => { addSet(item.id) }} text="Add set" backgroundColor='#7c868b' />
                         </View>
                     </View>
                 }
                 ListFooterComponent={
                     <View>
-                        <TouchableOpacity onPress={() => { addEx() }} style={[styles.addBtn, { marginVertical: normalMargin }]}>
-                            <View style={styles.horizontalText}>
-                                <Text style={styles.appButtonText}>Add exercise</Text>
-                                <Icon name='add-outline' style={styles.btnIcon} />
-                            </View>
-                        </TouchableOpacity>
+                        <WTButton onPress={() => { addEx() }} text={"Add exercise"} />
+                        <View style={styles.horizontalContainer}>
+                            <WTIconButton library='Feather' name='trash-2' onPress={() => { onRequestClose(); }} color={"red"} />
+                            <WTIconButton library='Feather' name='save' onPress={() => { saveWorkout(workout); console.log("123") }} color={colors.BLUE} />
+                        </View>
                     </View>
-
                 }
                 keyExtractor={item => item.id}
             />
@@ -183,107 +161,3 @@ const StartedWorkout = ({ workout }) => {
 }
 
 export default StartedWorkout;
-
-const style = StyleSheet.create({
-    mainContainer: {
-        flex: 1,
-        backgroundColor: colors.MAIN,
-    },
-    container: {
-        justifyContent: 'space-between',
-    },
-    title: {
-        color: '#fff',
-        fontSize: 20,
-        marginLeft: 10,
-    },
-    card: {
-        width: cardWidth,
-        borderRadius: 10,
-        backfaceVisibility: 'hidden',
-        alignSelf: 'center',
-        marginTop: normalMargin,
-        paddingTop: 20,
-        paddingBottom: 25,
-    },
-    cardTitle: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 10,
-    },
-    select: {
-        flex: 2,
-        fontSize: 30
-    },
-    inputs: {
-        borderWidth: 1,
-        borderColor: '#7c868b',
-        marginLeft: 15,
-        marginTop: 10,
-        width: '60%',
-        borderRadius: 7,
-        color: 'white',
-        fontSize: 15,
-        paddingHorizontal: 7,
-    },
-    btnIcon: {
-        marginRight: (Dimensions.get('window').width - cardWidth) / 2,
-        fontSize: 25,
-        color: 'white',
-        fontWeight: 'bold',
-        marginTop: 5,
-    },
-    exercise: {
-        display: 'flex',
-        flex: 5,
-        marginTop: 10,
-        marginLeft: 5,
-        marginRight: 10,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 5
-    },
-    removeButton: {
-        flex: 1,
-        paddingTop: 7,
-        fontSize: 25,
-        color: 'white',
-        fontWeight: 'bold',
-    },
-    exProp: {
-        flex: 1,
-        borderRadius: 5,
-        marginBottom: 5,
-        height: '100%',
-        paddingHorizontal: 7,
-        color: 'white',
-        fontSize: 15,
-        overflow: 'hidden'
-    },
-    popUp: {
-        backgroundColor: colors.MAIN,
-        borderRadius: 10,
-        padding: 5,
-        height: Dimensions.get('window').height - 100,
-        width: Dimensions.get('window').width * 0.75,
-        elevation: 20,
-        shadowColor: 'black',
-        shadowOpacity: .60
-    },
-    popUpCenter: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 5,
-        margin: normalMargin,
-    },
-    popUpButton: {
-        backgroundColor: "#2e42f8",
-        elevation: 8,
-        borderRadius: 25,
-        marginTop: normalMargin,
-        marginRight: 'auto',
-        marginLeft: 'auto',
-        padding: 10,
-        marginBottom: normalMargin
-    }
-})

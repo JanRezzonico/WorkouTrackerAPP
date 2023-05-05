@@ -1,6 +1,5 @@
 export default {
-    BASE_URL: "http://192.168.1.29:3000/api", //REST API URL
-    //BASE_URL: "https://workoutracker-5xep.onrender.com/api",
+    BASE_URL: "https://workoutracker-5xep.onrender.com/api", //REST API URL
     DELETE_USER_ID: false,
     WEIGHT_MIN: 20, // kg
     WEIGHT_MAX: 200, // kg

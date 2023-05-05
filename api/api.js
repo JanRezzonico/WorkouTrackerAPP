@@ -1,17 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { logger, consoleTransport } from "react-native-logs";
-//const BASE_URL = "http://10.4.25.11:3000/api";
-//const BASE_URL = "http://10.4.25.23:3000/api";
-//const BASE_URL = "http://192.168.1.29:3000/api";
-//const BASE_URL = "http://10.4.25.11:3000/api";
-//const BASE_URL = "http://10.4.25.23:3000/api";
-//const BASE_URL = "http://192.168.1.122:3000/api";
-//const BASE_URL = "http://192.168.1.29:3000/api";
-//const BASE_URL = "http://10.4.25.27:3000/api";
-//const BASE_URL = "http://10.4.25.11:3000/api";
-//const BASE_URL = "https://workoutracker-5xep.onrender.com/api";
-const BASE_URL = "http://192.168.1.113:3000/api";
-
 import constants from "../constants/constants";
 
 const defaultConfig = {

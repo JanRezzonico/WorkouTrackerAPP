@@ -100,5 +100,11 @@ module.exports = StyleSheet.create({
         color: 'white',
         flex: 0.9,
         fontSize: 16,
+    },
+    horizontalContainer: {
+        alignItems: "flex-start",
+        flexDirection: "row",
+        justifyContent: "space-around",
+        marginTop: 10
     }
 });

@@ -125,14 +125,14 @@ function StartWorkoutView(props) {
             displayCustomTemplates(value);
         }
         const displayCustomTemplates = (value) => {
-            if(value !== null){
+            if (value !== null) {
                 setTemplates(value);
                 console.log(templates);
                 // console.log(customTemplates);
             }
         }
         loadCustomTemplates();
-    },[]);
+    }, []);
     return (
         <View>
             <SafeAreaView style={styles.mainContainer}>
@@ -144,7 +144,7 @@ function StartWorkoutView(props) {
                                 <TemplateItemView template={e} />
                             );
                         }}
-                        ListHeaderComponent={<HeaderComponent templates={templates} setTemplates={setTemplates}/>}
+                        ListHeaderComponent={<HeaderComponent templates={templates} setTemplates={setTemplates} />}
                         ListFooterComponent={footerComponent}
                     />
                 }
@@ -157,17 +157,19 @@ function StartWorkoutView(props) {
     The headerComponent display the Quick start section and the custom templates title
     Is a component of the FlatList in the main function
 */
-const HeaderComponent = ({templates, setTemplates}) => {
+const HeaderComponent = ({ templates, setTemplates }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [exList, setExList] = useState([]);
     const [exProp, setExProp] = useState([]);
     const [workoutName, setWorkoutName] = useState("");
-    
+    const [workoutModalVisible, setWorkoutModalVisible] = useState(false);
+    const [workout, setWorkout] = useState(null);
+
 
     const handleExListChange = (exList) => {
         setExList(exList);
     };
-    
+
     const handleExPropChange = (exProp) => {
         setExProp(exProp);
     };
@@ -176,14 +178,14 @@ const HeaderComponent = ({templates, setTemplates}) => {
         setWorkoutName(workoutName);
     };
 
-    const  saveTemplate = () => {
-        var newTemplate = {title: workoutName, exercises: []};
+    const saveTemplate = () => {
+        var newTemplate = { title: workoutName, exercises: [] };
         var counter = 0;
         exList.forEach((ex) => {
             //newTemplate.exercises[counter].name = ex.selectedOption;
-            var temp = {name: ex.selectedOption, sets:[]};
+            var temp = { name: ex.selectedOption, sets: [] };
             exProp.forEach((prop) => {
-                if(ex.id === prop.exId){
+                if (ex.id === prop.exId) {
                     //newTemplate.exercises[counter].sets.push(prop);
                     temp.sets.push(prop);
                 }
@@ -193,15 +195,32 @@ const HeaderComponent = ({templates, setTemplates}) => {
         })
         console.log(newTemplate);
         console.log(newTemplate.exercises[0].sets);
-        setTemplates(...templates,newTemplate);
-        AsyncStorage.setItem('templates',JSON.stringify(templates));
+        setTemplates(...templates, newTemplate);
+        AsyncStorage.setItem('templates', JSON.stringify(templates));
     };
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.subtitle}>Quick Start</Text>
-                <WTButton onPress={async () => {var provaprova = await AsyncStorage.getItem('templates'); console.log(provaprova); console.log("Templates: "+templates);}} text={"Start Empty Workout"}></WTButton>
+                <WTButton
+                    onPress={
+                        () => {
+                            setWorkoutModalVisible(true);
+                        }
+                    }
+                    text={"Start Empty Workout"}
+                />
             </View>
+            <Modal
+                animationType='fade'
+                visible={workoutModalVisible}
+                transparent={false}
+                onRequestClose={() => {
+                    setWorkoutModalVisible(!workoutModalVisible);
+                }}
+            >
+                <StartedWorkout workout={workout} setWorkout={setWorkout} onRequestClose={() => { setWorkoutModalVisible(!workoutModalVisible) }} />
+            </Modal>
             <View style={styles.contents}>
                 <View style={styles.addTemplate}>
                     <Text style={styles.subtitle}>Custom Templates</Text>
@@ -220,12 +239,12 @@ const HeaderComponent = ({templates, setTemplates}) => {
                         {/* Pop-up content*/}
                         <View style={styles.popUpCenter}>
                             <View style={styles.popUp}>
-                                <CreateWorkoutModelView weight={70} height={1.70} onNameChange={handleNameChange} onExListChange={handleExListChange} onExPropChange={handleExPropChange}/>
+                                <CreateWorkoutModelView weight={70} height={1.70} onNameChange={handleNameChange} onExListChange={handleExListChange} onExPropChange={handleExPropChange} />
                                 {/* Close pop-up button */}
                                 <View style={styles.popUpBtnContainer}>
                                     <TouchableOpacity
                                         style={[styles.popUpButton, { backgroundColor: '#80898b' }]}
-                                        onPress={() => { setModalVisible(!modalVisible);}}
+                                        onPress={() => { setModalVisible(!modalVisible); }}
                                     >
                                         <Text style={styles.appButtonText}>Close</Text>
                                     </TouchableOpacity>
@@ -242,7 +261,7 @@ const HeaderComponent = ({templates, setTemplates}) => {
                             </View>
                         </View>
                     </Modal>
-                    <WTIconButton onPress={() => setModalVisible(true)} library="Ionicons" name="add-outline" size={20}/>
+                    <WTIconButton onPress={() => setModalVisible(true)} library="Ionicons" name="add-outline" size={20} />
                 </View>
             </View>
         </View>
@@ -266,7 +285,7 @@ const footerComponent = () => {
                         );
                     }}
                 />
-                <View style={styles.bottomPlaceHolder}/>
+                <View style={styles.bottomPlaceHolder} />
             </View>
         </View>
     )
@@ -282,8 +301,8 @@ const TemplateItemView = (props) => {
     return (
         <TouchableOpacity onPress={() => setModal2Visible(true)} style={styles.woTemplate}>
             <Text style={styles.templateTitle}>{props.template.item.title}</Text>
-            
-            <WOProgressModal modalVisible={modal2Visible} setModalVisible={setModal2Visible} onclose={() => setModal2Visible(!modal2Visible)} workout={props.template.item}/>
+
+            <WOProgressModal modalVisible={modal2Visible} setModalVisible={setModal2Visible} onclose={() => setModal2Visible(!modal2Visible)} workout={props.template.item} />
 
             <FlatList // List of Exercises like 3xSquat, 3xCurl
                 data={props.template.item.exercises}
@@ -309,7 +328,7 @@ const WOProgressModal = ({ setModalVisible, modalVisible, onClose, workout }) =>
             <View style={styles.popUpCenter}>
                 <View style={styles.popUp}>
                     {/** insert json here.. */}
-                    <StartedWorkout workout={workout}/>
+                    <StartedWorkout workout={workout} />
                     {/* Close pop-up button */}
                     <View style={styles.popUpBtnContainer}>
                         <TouchableOpacity
@@ -324,7 +343,7 @@ const WOProgressModal = ({ setModalVisible, modalVisible, onClose, workout }) =>
                             style={styles.popUpButton}
                             onPress={() => {
                                 setModalVisible(!modalVisible)
-                                
+
                             }}
                         >
                             <Text style={styles.appButtonText}>Create</Text>
