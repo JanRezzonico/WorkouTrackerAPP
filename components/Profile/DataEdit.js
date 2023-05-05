@@ -24,7 +24,6 @@ const DataEdit = ({ user, setUser, toggleEdit }) => {
             weight: parseInt(weight),
         };
         setUser(updatedUser);
-        console.log(updatedUser.last_name);
         DB.user.update(updatedUser);
         toggleEdit();
     };

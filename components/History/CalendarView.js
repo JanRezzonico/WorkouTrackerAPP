@@ -34,8 +34,6 @@ function CalendarView({sessions, setSessions}) {
         <View>
             <View style={styles.calendar}>
                 <CalendarList
-                    // Callback which gets executed when visible months change in scroll view. Default = undefined
-                    onVisibleMonthsChange={(months) => {console.log('now these months are visible', months);}}
                     // Max amount of months allowed to scroll to the past. Default = 50
                     pastScrollRange={50}
                     // Max amount of months allowed to scroll to the future. Default = 50
@@ -50,11 +48,9 @@ function CalendarView({sessions, setSessions}) {
                     //---------------CalendarParams
                     // Handler which gets executed on day press. Default = undefined
                     onDayPress={day => {
-                        console.log('selected day', day);
                     }}
                     // Handler which gets executed on day long press. Default = undefined
                     onDayLongPress={day => {
-                        console.log('long pressed day', day);
                     }}
                     // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
                     monthFormat={'MMMM yyyy'}

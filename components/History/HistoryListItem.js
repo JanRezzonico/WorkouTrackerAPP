@@ -10,12 +10,9 @@ const normalMargin = Dimensions.get('window').height * 0.02;
 
 
 function HistoryListItem(props) {
-    console.log("aaaa");
-    console.log(props);
     const start_date = new Date(props.start_date);
     const end_date = new Date(props.end_date);
     const duration = Math.trunc((end_date - start_date) / (1000 * 60)*10)/10;
-    console.log(duration);
     const day = start_date.toLocaleDateString();
     let totalWeight = 0;
     // Calculate total weight

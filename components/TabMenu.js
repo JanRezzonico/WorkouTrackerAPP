@@ -13,7 +13,6 @@ function TabMenu(props) {
     useEffect(() => {
         const setUserId = async () => {
             const value = await AsyncStorage.getItem('_id');
-            console.log(value);
             global.USER_ID = value;
         };
         setUserId();
