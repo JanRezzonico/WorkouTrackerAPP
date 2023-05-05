@@ -1,0 +1,5 @@
+[{000214A0-0000-0000-C000-000000000046}]
+Prop3=19,11
+[InternetShortcut]
+IDList=
+URL=https://stackoverflow.com/questions/53040047/generate-apk-file-from-aab-file-android-app-bundle#:~:text=java%20%2Djar%20bundletool.jar%20build%2Dapks%20%2D%2Dbundle%3Dyour_app.aab%20%2D%2Doutput%3Dyour_app.apks%20%2D%2Dmode%3Duniversal

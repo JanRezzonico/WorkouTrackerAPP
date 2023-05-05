@@ -21,7 +21,8 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "This app needs access to your photo library to select pictures."
-      }
+      },
+      "bundleIdentifier": "com.workoutracker.workoutracker"
     },
     "android": {
       "adaptiveIcon": {
