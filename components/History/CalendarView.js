@@ -32,14 +32,6 @@ const blue = '#35A7FF'
 function CalendarView({sessions, setSessions}) {
     return (
         <View>
-            {/*
-            <View style={styles.topNav}>
-                <TouchableOpacity onPress={() => props.navigation.navigate("HistoryView")} style={styles.btnContain}>
-                    <Icon name="arrow-back" style={styles.btnIcon} />
-                </TouchableOpacity>
-                <Text style={styles.title}>Calendar</Text>
-            </View>
-            */}
             <View style={styles.calendar}>
                 <CalendarList
                     // Callback which gets executed when visible months change in scroll view. Default = undefined
@@ -110,12 +102,11 @@ function CalendarView({sessions, setSessions}) {
                     markingType={'period'}
                     markedDates={{
                         //'{date}': {marked: true, dotColor: '{color based on number of templates}', marked with dot
-                        /*highlight period of time, can also mark with dot
+                        /* highlight period of time, can also mark with dot
                         '2023-05-21': {startingDay: true, color: '#50cebb', textColor: 'white'},
                         '2023-05-23': {color: '#70d7c7', textColor: 'white', marked: true, dotColor: 'white'},
                         '2023-05-25': {endingDay: true, color: '#50cebb', textColor: 'white'}
                         */
-                        
                     }}
                     
                 />

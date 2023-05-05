@@ -1,7 +1,5 @@
-import { Text, View, StyleSheet, Dimensions, SafeAreaView, ScrollView, TouchableOpacity, FlatList, SectionList, Modal } from "react-native";
+import { Text, View, StyleSheet, Dimensions, SafeAreaView, TouchableOpacity, FlatList, Modal } from "react-native";
 import { useState } from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-//import TemplateItemView from "./components/TemplateItemView";
 import CreateWorkoutModelView from "../CreateWorkoutModelView";
 import StartedWorkout from "./StartedWorkout";
 import WTButton from "../wt/WTButton";
@@ -10,6 +8,7 @@ import WTIconButton from "../wt/WTIconButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 
+//Require JSON with the default templates 
 const defaultTemplates = require("../../assets/json/defaultTemplates").templates;
 
 const normalMargin = Dimensions.get('window').height * 0.015;
@@ -19,13 +18,16 @@ const subTitleFont = Dimensions.get('window').width * 0.045;
 
 function StartWorkoutView(props) {
     const [templates, setTemplates] = useState([]);
+    //Every time the application renders the view, update the custom templates list
     useEffect(() => {
         var value = null;
+        //get the custom templates from the device
         const loadCustomTemplates = async () => {
             value = await AsyncStorage.getItem('templates');
             value = JSON.parse(value);
             displayCustomTemplates(value);
         }
+        //set the useState
         const displayCustomTemplates = (value) => {
             if (value !== null) {
                 setTemplates(value);
@@ -45,7 +47,7 @@ function StartWorkoutView(props) {
                             );
                         }}
                         ListHeaderComponent={<HeaderComponent templates={templates} setTemplates={setTemplates} />}
-                        ListFooterComponent={footerComponent}
+                        ListFooterComponent={<FooterComponent/>}
                     />
                 }
             </SafeAreaView>
@@ -65,15 +67,15 @@ const HeaderComponent = ({ templates, setTemplates }) => {
     const [workoutModalVisible, setWorkoutModalVisible] = useState(false);
     const [workout, setWorkout] = useState(null);
 
-
+    //Get change from new template form
     const handleExListChange = (exList) => {
         setExList(exList);
     };
-
+    //Get change from new template form
     const handleExPropChange = (exProp) => {
         setExProp(exProp);
     };
-
+    //Get change from new template form
     const handleNameChange = (workoutName) => {
         setWorkoutName(workoutName);
     };
@@ -112,14 +114,16 @@ const HeaderComponent = ({ templates, setTemplates }) => {
             <View style={styles.header}>
                 <Text style={styles.subtitle}>Quick Start</Text>
                 <WTButton
-                    onPress={
-                        () => {
+                    onPress={() => {
                             setWorkoutModalVisible(true);
-                        }
-                    }
+                    }}
                     text={"Start Empty Workout"}
                 />
             </View>
+            {/*
+                the component modal is used to show a pop-up when a user tries to add a custom template
+                this specific modal shows the view to start an empty workout
+            */}
             <Modal
                 animationType='fade'
                 visible={workoutModalVisible}
@@ -148,25 +152,14 @@ const HeaderComponent = ({ templates, setTemplates }) => {
                         {/* Pop-up content*/}
                         <View style={styles.popUpCenter}>
                             <View style={styles.popUp}>
-                                <CreateWorkoutModelView weight={70} height={1.70} onNameChange={handleNameChange} onExListChange={handleExListChange} onExPropChange={handleExPropChange} />
-                                {/* Close pop-up button */}
-                                <View style={styles.popUpBtnContainer}>
-                                    <TouchableOpacity
-                                        style={[styles.popUpButton, { backgroundColor: '#80898b' }]}
-                                        onPress={() => { setModalVisible(!modalVisible); }}
-                                    >
-                                        <Text style={styles.appButtonText}>Close</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        style={styles.popUpButton}
-                                        onPress={() => {
-                                            saveTemplate();
-                                            setModalVisible(!modalVisible);
-                                        }}
-                                    >
-                                        <Text style={styles.appButtonText}>Create</Text>
-                                    </TouchableOpacity>
-                                </View>
+                                <CreateWorkoutModelView 
+                                    weight={70} height={1.70} 
+                                    onNameChange={handleNameChange} 
+                                    onExListChange={handleExListChange} 
+                                    onExPropChange={handleExPropChange} 
+                                    saveTemplate={saveTemplate}
+                                    onRequestClose={() => { setModalVisible(!modalVisible); }}
+                                />
                             </View>
                         </View>
                     </Modal>
@@ -178,10 +171,10 @@ const HeaderComponent = ({ templates, setTemplates }) => {
 };
 
 /*
-    The footerComponent display the Sample template section
-    Is a component of the FlatList in the main function
+    The footerComponent is part of the FlatList in the main function
+    this specific footer display the Sample template section
 */
-const footerComponent = () => {
+const FooterComponent = () => {
     return (
         <View style={styles.container}>
             <View style={styles.contents}>

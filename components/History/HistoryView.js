@@ -49,7 +49,10 @@ function HistoryView(props) {
                 />
             </View>
             <HistoryListView sessions={sessions} setSessions={setSessions}/>
-
+            {/*
+                the component modal is used to show a pop-up when a user tries to add a custom template
+                this specific modal shows the ChartView or the CalendarView based on wich button was pressed
+            */}
             <Modal
                 style="padding: 2px;"
                 animationType='fade'

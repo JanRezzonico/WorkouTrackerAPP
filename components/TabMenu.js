@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../assets/style/colors';
 
 function TabMenu(props) {
+    //When the view gets rendered, get the user ID from the AsyncStorage and set it
     useEffect(() => {
         const setUserId = async () => {
             const value = await AsyncStorage.getItem('_id');
@@ -19,7 +20,8 @@ function TabMenu(props) {
     }, []);
     const Tab = createBottomTabNavigator();
     return (
-        <Tab.Navigator initialRouteName='StartWorkoutView'
+        <Tab.Navigator
+            initialRouteName='StartWorkoutView'
             screenOptions={{
                 tabBarShowLabel: false,
                 tabBarActiveBackgroundColor: colors.BLUE,
@@ -28,6 +30,7 @@ function TabMenu(props) {
                 headerTintColor: colors.BLUE,
                 headerTitleAlign: 'center',
             }}>
+            {/* ProfileView */}
             <Tab.Screen
                 name="Profile"
                 component={ProfileView}
@@ -36,6 +39,7 @@ function TabMenu(props) {
                         <Ionicons name="person-outline" size={size} color={color} />
                     ),
                 }} />
+            {/* StartWorkoutView */}
             <Tab.Screen
                 name="Start workout"
                 component={StartWorkoutView}
@@ -45,6 +49,7 @@ function TabMenu(props) {
                     ),
                 }}
             />
+            {/* HistoryView */}
             <Tab.Screen
                 name="History"
                 component={HistoryView}
@@ -53,6 +58,7 @@ function TabMenu(props) {
                         <MaterialIcons name="history" size={size} color={color} />
                     ),
                 }} />
+            {/* ExercisesView */}
             <Tab.Screen
                 name="Exercises"
                 component={ExercisesView}

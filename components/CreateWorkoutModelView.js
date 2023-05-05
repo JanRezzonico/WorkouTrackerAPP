@@ -8,12 +8,13 @@ import colors from '../assets/style/colors';
 import WTIconButton from './wt/WTIconButton';
 import WTButton from './wt/WTButton';
 import { useEffect } from 'react';
+import style from "../assets/style/style"
 
 const normalMargin = Dimensions.get('window').height * 0.02;
 const cardWidth = Dimensions.get('window').width * 0.9;
 
 
-function CreateWorkoutModelView({onNameChange, onExListChange, onExPropChange}) {
+function CreateWorkoutModelView({onNameChange, onExListChange, onExPropChange, saveTemplate, onRequestClose}) {
     //let exId = 1;
     // exId is used to set an uinique ID to each exercise
     const [exId, setExId] = useState(0);
@@ -56,6 +57,7 @@ function CreateWorkoutModelView({onNameChange, onExListChange, onExPropChange}) 
         setExProp([...exProp, { id: nextId, exId: id, kg: "", reps: "" }]);
     }
 
+    //When the view is render send change to StartWorkoutView
     useEffect(() => {
         onExListChange(exList);
     }, [exList, onExListChange]);
@@ -96,6 +98,7 @@ function CreateWorkoutModelView({onNameChange, onExListChange, onExPropChange}) 
                             Exercise picker + remove button  
                         */}
                         <View style={styles.exerciseType}>
+                            {/* ExercisePicker is a component used to pick an exercise from the list */}
                             <ExercisePicker
                                 style={styles.select}
                                 options={options}
@@ -130,11 +133,7 @@ function CreateWorkoutModelView({onNameChange, onExListChange, onExPropChange}) 
                                                     placeholderTextColor={'#aaa'}
                                                     keyboardType='numeric'
                                                     onChangeText={()=>{
-                                                        // setExProp(prevExProp => prevExProp.map(prop =>{
-                                                        //     if(prop.exId === item.id){
-                                                        //         return {...prop,kg:2}
-                                                        //     }
-                                                        // }))
+                                                        null
                                                     }}
                                                 />
                                                 <TextInput
@@ -144,11 +143,7 @@ function CreateWorkoutModelView({onNameChange, onExListChange, onExPropChange}) 
                                                     placeholderTextColor={'#aaa'}
                                                     keyboardType='numeric'
                                                     onChangeText={()=>{
-                                                        // setExProp(prevExProp => prevExProp.map(prop =>{
-                                                        //     if(prop.exId === item.id){
-                                                        //         return {...prop,rep:2}
-                                                        //     }
-                                                        // }))
+                                                        null
                                                     }}
                                                 />
                                             </View>
@@ -157,20 +152,18 @@ function CreateWorkoutModelView({onNameChange, onExListChange, onExPropChange}) 
                                 }}
                                 keyExtractor={item => item.id}
                             />
-                            <TouchableOpacity onPress={() => { addSet(item.id) }} style={[styles.addBtn,{backgroundColor:'#7c868b'}]}>
-                                <Text style={styles.appButtonText}>Add set</Text>
-                                <Icon name='add-outline' style={styles.btnIcon} />
-                            </TouchableOpacity>
+                            <WTButton onPress={() => { addSet(item.id) }} text="Add set" backgroundColor='#7c868b' />
                         </View>
                         <WTHorizontalLine color='white'/>
                     </View>
                 }
                 ListFooterComponent={
                     <View>
-                        <TouchableOpacity onPress={() => { addEx() }} style={[styles.addBtn,{marginVertical:normalMargin}]}>
-                            <Text style={styles.appButtonText}>Add exercise</Text>
-                            <Icon name='add-outline' style={styles.btnIcon} />
-                        </TouchableOpacity>
+                        <WTButton onPress={() => { addEx() }} text={"Add exercise"} />
+                        <View style={style.horizontalContainer}>
+                            <WTIconButton library='Feather' name='trash-2' onPress={() => { onRequestClose() }} color={"red"} />
+                            <WTIconButton library='Feather' name='save' onPress={() => { saveTemplate(); onRequestClose();}} color={colors.BLUE} />
+                        </View>
                     </View>
                     
                 }

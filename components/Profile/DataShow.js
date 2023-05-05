@@ -64,8 +64,6 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').width * 0.3,
         marginTop: StatusBar.currentHeight,
         alignSelf: 'center',
-        //borderWidth: 3,
-        //borderColor: '#2e42f8'
     },
     userName: {
         color: 'white',

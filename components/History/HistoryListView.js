@@ -21,9 +21,6 @@ function HistoryListView({sessions, setSessions}) {
             }
             <FlatList
                 data={sessions}
-                // keyExtractor={(item) => {
-                //     return item._id;
-                // }}
                 renderItem={(itemData) => {
                     console.log(itemData.item);
                     return (

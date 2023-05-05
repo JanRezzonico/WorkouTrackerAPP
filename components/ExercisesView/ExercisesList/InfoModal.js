@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.MAIN,
         borderRadius: 10,
         padding: 10,
-        maxHeight: Dimensions.get("window").height / 2, // add maxHeight instead of height
+        maxHeight: Dimensions.get("window").height / 2,
         width: Dimensions.get("window").width * 0.75,
         elevation: 10,
         shadowColor: "black",
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         alignItems: "center",
         justifyContent: "center",
-        paddingBottom: 50, // add paddingBottom to allow scrolling to the last item
+        paddingBottom: 50,
     },
     button: {
         marginTop: 10,
