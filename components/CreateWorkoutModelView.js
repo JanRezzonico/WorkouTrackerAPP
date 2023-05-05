@@ -17,15 +17,21 @@ function CreateWorkoutModelView({onNameChange, onExListChange, onExPropChange}) 
     //let exId = 1;
     // exId is used to set an uinique ID to each exercise
     const [exId, setExId] = useState(0);
+
     // setId is used to set an uinique ID to each set
     const [setId, setSetId] = useState(0);
 
     const [modalVisible, setModalVisible] = useState(false);
+    
+    // Templates's name
     const [name, setName] = useState('New Workout');
+
     // List of exercise
     const [exList, setExList] = useState([{ id: exId, selectedOption: "Select an option" }]);
+
     // List of sets and kg, with the ID of the exercise
     const [exProp, setExProp] = useState([{ id: setId, exId: exId, kg:0, rep:0 }]);
+
     // exercise selected from the picker
     const [selectedOption, setSelectedOption] = useState('Select an option');
     const data = require('../assets/json/exercises.json');

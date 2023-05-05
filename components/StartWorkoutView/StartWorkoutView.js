@@ -122,12 +122,13 @@ function StartWorkoutView(props) {
         const loadCustomTemplates = async () => {
             value = await AsyncStorage.getItem('templates');
             value = JSON.parse(value);
+            console.log(value);
             displayCustomTemplates(value);
         }
         const displayCustomTemplates = (value) => {
             if(value !== null){
                 setTemplates(value);
-                console.log(templates);
+                //console.log(templates);
                 // console.log(customTemplates);
             }
         }
@@ -176,9 +177,11 @@ const HeaderComponent = ({templates, setTemplates}) => {
         setWorkoutName(workoutName);
     };
 
-    const  saveTemplate = () => {
-        var newTemplate = {title: workoutName, exercises: []};
+    // this function save the created templates in to the device
+    const saveTemplate = () => {
+        var newTemplate = {exercises: [], title: workoutName};
         var counter = 0;
+        
         exList.forEach((ex) => {
             //newTemplate.exercises[counter].name = ex.selectedOption;
             var temp = {name: ex.selectedOption, sets:[]};
@@ -191,16 +194,45 @@ const HeaderComponent = ({templates, setTemplates}) => {
             newTemplate.exercises.push(temp);
             counter++;
         })
-        console.log(newTemplate);
-        console.log(newTemplate.exercises[0].sets);
-        setTemplates(...templates,newTemplate);
-        AsyncStorage.setItem('templates',JSON.stringify(templates));
+        //console.log(newTemplate);
+        let listTemplate = [...templates,newTemplate]
+        setTemplates(listTemplate);
+        AsyncStorage.setItem('templates',JSON.stringify(listTemplate));
     };
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.subtitle}>Quick Start</Text>
-                <WTButton onPress={async () => {var provaprova = await AsyncStorage.getItem('templates'); console.log(provaprova); console.log("Templates: "+templates);}} text={"Start Empty Workout"}></WTButton>
+                <WTButton 
+                    onPress={async () => {
+                        var provaprova = await AsyncStorage.getItem('templates');
+                        //console.log(provaprova);
+                        console.log(templates);
+                        console.log(customTemplates);
+                        // const testTemplate = 
+                        //     {
+                        //         title: "Test", exercises: [
+                        //             {
+                        //                 name: "Test", sets: [
+                        //                     { weight: 50, reps: 12 },
+                        //                     { weight: 60, reps: 10 },
+                        //                     { weight: 70, reps: 8 },
+                        //                 ]
+                        //             },
+                        //             {
+                        //                 name: "Test", sets: [
+                        //                     { weight: 16, reps: 12 },
+                        //                     { weight: 18, reps: 10 },
+                        //                     { weight: 20, reps: 8 },
+                        //                 ]
+                        //             },
+                        //         ]
+                        //     }
+                        
+                        // AsyncStorage.setItem('templates',JSON.stringify(testTemplate));
+                    }}
+                    text={"Start Empty Workout"}>
+                </WTButton>
             </View>
             <View style={styles.contents}>
                 <View style={styles.addTemplate}>
