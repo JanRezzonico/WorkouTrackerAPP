@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
-import { Text, View, FlatList, ScrollView } from "react-native";
+import { Text, View, FlatList, ScrollView, Modal } from "react-native";
 import HistoryListItem from "./HistoryListItem";
-import DB from "../../api/api";
+import { fetchData } from "./Model";
 
 function HistoryListView({sessions, setSessions}) {
     
     // After rendering the components get the session data
     useEffect(() => {
-        async function fetchData() {
-            const data = await DB.session.get();
-            setSessions(data);
-        }
-        fetchData();
+        fetchData(setSessions);;
     }, []);
+    
+    
     
     return (
         <View>
@@ -22,7 +20,6 @@ function HistoryListView({sessions, setSessions}) {
             <FlatList
                 data={sessions}
                 renderItem={(itemData) => {
-                    console.log(itemData.item);
                     return (
                         <HistoryListItem {...itemData.item} />
                     );

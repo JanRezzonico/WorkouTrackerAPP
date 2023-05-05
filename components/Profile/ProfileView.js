@@ -40,7 +40,7 @@ function ProfileView(props) {
                 await AsyncStorage.setItem(PROFILE_IMAGE_KEY, imageUri);
             }
         } catch (error) {
-            console.log('Error picking image:', error);
+            console.error('Error picking image:', error);
         }
     };
     const toggleEdit = () => {

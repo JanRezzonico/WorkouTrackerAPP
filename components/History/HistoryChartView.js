@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
 import { Chart, Line, Area, HorizontalAxis, VerticalAxis, Tooltip } from 'react-native-responsive-linechart';
 import colors from '../../assets/style/colors';
+import { chartData } from './Model';
 //#region const
 const normalMargin = Dimensions.get('window').height * 0.02;
 const buttonWidth = Dimensions.get('window').width * 0.5;
@@ -12,21 +13,9 @@ const highlightColor = '#8c9596';
 const fontColor = '#F9F9F9';
 const blue = '#35A7FF';
 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-const hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+const hours = Array.from({length: 23}, (_,i) => i +1);
 var chartLabels = days;
-const data = [
-    { x: 0, y: 15 },
-    { x: 1, y: 7 },
-    { x: 2, y: 6 },
-    { x: 3, y: 3 },
-    { x: 4, y: 5 },
-    { x: 5, y: 8 },
-    { x: 6, y: 12 },
-    { x: 7, y: 14 },
-    { x: 8, y: 12 },
-    { x: 9, y: 13 },
-    { x: 10, y: 18 },
-];
+const data = chartData();
 const weeklyTime = [];
 //#endregion const
 
@@ -34,11 +23,9 @@ function setXAxis(type) {
     switch (type) {
         case 'd':
             chartLabels = hours;
-            console.log(chartLabels);
             break;
         case 'w':
             chartLabels = days;
-            console.log(chartLabels);
             break;
         case 'm':
             break;

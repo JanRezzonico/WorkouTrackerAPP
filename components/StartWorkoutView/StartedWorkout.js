@@ -150,7 +150,7 @@ const StartedWorkout = ({ workout = null, setWorkout, onRequestClose }) => {
                         <WTButton onPress={() => { addEx() }} text={"Add exercise"} />
                         <View style={styles.horizontalContainer}>
                             <WTIconButton library='Feather' name='trash-2' onPress={() => { onRequestClose(); }} color={"red"} />
-                            <WTIconButton library='Feather' name='save' onPress={() => { saveWorkout(workout); console.log("123") }} color={colors.BLUE} />
+                            <WTIconButton library='Feather' name='save' onPress={() => { saveWorkout(workout); }} color={colors.BLUE} />
                         </View>
                     </View>
                 }
