@@ -204,7 +204,7 @@ const TemplateItemView = (props) => {
 
     return (
         <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.woTemplate}>
-            <Text style={styles.templateTitle}>{props.template.item.name}</Text>
+            <Text style={styles.templateTitle}>{props.template.item.title}</Text>
 
             <WOProgressModal modalVisible={modalVisible} setModalVisible={setModalVisible} onclose={() => setModalVisible(false)} workout={props.template.item} />
 

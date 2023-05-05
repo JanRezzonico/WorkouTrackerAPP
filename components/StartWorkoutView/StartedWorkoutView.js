@@ -66,7 +66,7 @@ const StartedWorkoutView = ({ workout = null, setWorkout, toggleModal }) => {
                                 style={styles.inputs}
                                 value={name}
                                 placeholderTextColor={'#aaa'}
-                                placeholder={workout ? workout.name : "New Workout"}
+                                placeholder={workout ? workout.title : "New Workout"}
                                 onChangeText={text => setName(text)}
                             />
                         </View>

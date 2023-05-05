@@ -1,5 +1,6 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import PropTypes from 'prop-types';
+import { RFValue } from "react-native-responsive-fontsize";
 
 const WTButton = ({ text, onPress, backgroundColor = '#2e42f8', color = 'white' }) => {
     const styles = StyleSheet.create({
@@ -14,7 +15,7 @@ const WTButton = ({ text, onPress, backgroundColor = '#2e42f8', color = 'white' 
             paddingHorizontal: 100
         },
         appButtonText: {
-            fontSize: 18,
+            fontSize: RFValue(18),
             color: color,
             fontWeight: 'bold',
             alignSelf: 'center',
