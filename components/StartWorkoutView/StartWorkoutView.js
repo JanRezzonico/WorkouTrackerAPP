@@ -4,35 +4,36 @@ import Icon from 'react-native-vector-icons/Ionicons';
 //import TemplateItemView from "./components/TemplateItemView";
 import CreateWorkoutModelView from "../CreateWorkoutModelView";
 import StartedWorkout from "./StartedWorkout";
+import StartedWorkoutView from "./StartedWorkoutView";
 import WTButton from "../wt/WTButton";
 import colors from "../../assets/style/colors";
 import WTIconButton from "../wt/WTIconButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 
-const customTemplates = [
-    {
-        title: "Leg Day", exercises: [
-            {
-                name: "Squat", sets: [
-                    { weight: 50, reps: 12 },
-                    { weight: 60, reps: 10 },
-                    { weight: 70, reps: 8 },
-                ]
-            },
-            {
-                name: "Split Squats", sets: [
-                    { weight: 16, reps: 12 },
-                    { weight: 18, reps: 10 },
-                    { weight: 20, reps: 8 },
-                ]
-            },
-        ]
-    }
-];
+// const customTemplates = [
+//     {
+//         title: "Leg Day", exercises: [
+//             {
+//                 name: "Squat", sets: [
+//                     { weight: 50, reps: 12 },
+//                     { weight: 60, reps: 10 },
+//                     { weight: 70, reps: 8 },
+//                 ]
+//             },
+//             {
+//                 name: "Split Squats", sets: [
+//                     { weight: 16, reps: 12 },
+//                     { weight: 18, reps: 10 },
+//                     { weight: 20, reps: 8 },
+//                 ]
+//             },
+//         ]
+//     }
+// ];
 const sampleTemplates = [
     {
-        title: "Chest", exercises: [
+        name: "Chest", exercises: [
             {
                 name: "Bench Press (Barbell)", sets: [
                     { weight: 50, reps: 12 },
@@ -57,7 +58,7 @@ const sampleTemplates = [
         ]
     },
     {
-        title: "Arms", exercises: [
+        name: "Arms", exercises: [
             {
                 name: "Bicep Curl (Barbell)", sets: [
                     { weight: 50, reps: 12 },
@@ -82,7 +83,7 @@ const sampleTemplates = [
         ]
     },
     {
-        title: "Back", exercises: [
+        name: "Back", exercises: [
             {
                 name: "Bicep Curl (Barbell)", sets: [
                     { weight: 50, reps: 12 },
@@ -181,9 +182,9 @@ const HeaderComponent = ({ templates, setTemplates }) => {
 
     // this function save the created templates in to the device
     const saveTemplate = () => {
-        var newTemplate = {exercises: [], title: workoutName};
+        var newTemplate = { exercises: [], name: workoutName };
         var counter = 0;
-        
+
         exList.forEach((ex) => {
             //newTemplate.exercises[counter].name = ex.selectedOption;
             var temp = { name: ex.selectedOption, sets: [] };
@@ -197,9 +198,9 @@ const HeaderComponent = ({ templates, setTemplates }) => {
             counter++;
         })
         //console.log(newTemplate);
-        let listTemplate = [...templates,newTemplate]
+        let listTemplate = [...templates, newTemplate]
         setTemplates(listTemplate);
-        AsyncStorage.setItem('templates',JSON.stringify(listTemplate));
+        AsyncStorage.setItem('templates', JSON.stringify(listTemplate));
     };
     return (
         <View style={styles.container}>
@@ -222,7 +223,7 @@ const HeaderComponent = ({ templates, setTemplates }) => {
                     setWorkoutModalVisible(!workoutModalVisible);
                 }}
             >
-                <StartedWorkout workout={workout} setWorkout={setWorkout} onRequestClose={() => { setWorkoutModalVisible(!workoutModalVisible) }} />
+                <StartedWorkoutView workout={workout} setWorkout={setWorkout} toggleModal={() => { setWorkoutModalVisible(!workoutModalVisible) }} />
             </Modal>
             <View style={styles.contents}>
                 <View style={styles.addTemplate}>
@@ -299,13 +300,13 @@ const footerComponent = () => {
     When a user clicks on a template a modal will open and show the view to start the workout
 */
 const TemplateItemView = (props) => {
-    const [modal2Visible, setModal2Visible] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
 
     return (
-        <TouchableOpacity onPress={() => setModal2Visible(true)} style={styles.woTemplate}>
-            <Text style={styles.templateTitle}>{props.template.item.title}</Text>
+        <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.woTemplate}>
+            <Text style={styles.templateTitle}>{props.template.item.name}</Text>
 
-            <WOProgressModal modalVisible={modal2Visible} setModalVisible={setModal2Visible} onclose={() => setModal2Visible(!modal2Visible)} workout={props.template.item} />
+            <WOProgressModal modalVisible={modalVisible} setModalVisible={setModalVisible} onclose={() => setModalVisible(false)} workout={props.template.item} />
 
             <FlatList // List of Exercises like 3xSquat, 3xCurl
                 data={props.template.item.exercises}
@@ -320,6 +321,12 @@ const TemplateItemView = (props) => {
 }
 
 const WOProgressModal = ({ setModalVisible, modalVisible, onClose, workout }) => {
+    const [workoutState, setWorkout] = useState({ name: workout.name, exercises: workout.exercises });
+
+    const toggleModal = () => {
+        setModalVisible(!modalVisible);
+    }
+
     return (
         <Modal
             visible={modalVisible}
@@ -331,27 +338,8 @@ const WOProgressModal = ({ setModalVisible, modalVisible, onClose, workout }) =>
             <View style={styles.popUpCenter}>
                 <View style={styles.popUp}>
                     {/** insert json here.. */}
-                    <StartedWorkout workout={workout} />
+                    <StartedWorkoutView workout={workout} setWorkout={setWorkout} toggleModal={toggleModal} />
                     {/* Close pop-up button */}
-                    <View style={styles.popUpBtnContainer}>
-                        <TouchableOpacity
-                            style={[styles.popUpButton, { backgroundColor: '#80898b' }]}
-                            onPress={() => {
-                                setModalVisible(!modalVisible)
-                            }}
-                        >
-                            <Text style={styles.appButtonText}>Close</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.popUpButton}
-                            onPress={() => {
-                                setModalVisible(!modalVisible)
-
-                            }}
-                        >
-                            <Text style={styles.appButtonText}>Create</Text>
-                        </TouchableOpacity>
-                    </View>
                 </View>
             </View>
         </Modal>
