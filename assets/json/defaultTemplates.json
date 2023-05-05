@@ -1,0 +1,172 @@
+{
+  "templates": [
+    {
+      "title": "Chest",
+      "exercises": [
+        {
+          "name": "Bench Press (Barbell)",
+          "sets": [
+            {
+              "weight": 50,
+              "reps": 12
+            },
+            {
+              "weight": 60,
+              "reps": 10
+            },
+            {
+              "weight": 70,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "name": "Bench Press (Dumbbell)",
+          "sets": [
+            {
+              "weight": 16,
+              "reps": 12
+            },
+            {
+              "weight": 18,
+              "reps": 10
+            },
+            {
+              "weight": 20,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "name": "Cable Cross (Cable)",
+          "sets": [
+            {
+              "weight": 16,
+              "reps": 12
+            },
+            {
+              "weight": 18,
+              "reps": 10
+            },
+            {
+              "weight": 20,
+              "reps": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Arms",
+      "exercises": [
+        {
+          "name": "Bicep Curl (Barbell)",
+          "sets": [
+            {
+              "weight": 50,
+              "reps": 12
+            },
+            {
+              "weight": 60,
+              "reps": 10
+            },
+            {
+              "weight": 70,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "name": "Bicep Curl (Dumbbell)",
+          "sets": [
+            {
+              "weight": 16,
+              "reps": 12
+            },
+            {
+              "weight": 18,
+              "reps": 10
+            },
+            {
+              "weight": 20,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "name": "Skullcrusher (Dumbbell)",
+          "sets": [
+            {
+              "weight": 16,
+              "reps": 12
+            },
+            {
+              "weight": 18,
+              "reps": 10
+            },
+            {
+              "weight": 20,
+              "reps": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Back",
+      "exercises": [
+        {
+          "name": "Bicep Curl (Barbell)",
+          "sets": [
+            {
+              "weight": 50,
+              "reps": 12
+            },
+            {
+              "weight": 60,
+              "reps": 10
+            },
+            {
+              "weight": 70,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "name": "Bicep Curl (Dumbbell)",
+          "sets": [
+            {
+              "weight": 16,
+              "reps": 12
+            },
+            {
+              "weight": 18,
+              "reps": 10
+            },
+            {
+              "weight": 20,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "name": "Skullcrusher (Dumbbell)",
+          "sets": [
+            {
+              "weight": 16,
+              "reps": 12
+            },
+            {
+              "weight": 18,
+              "reps": 10
+            },
+            {
+              "weight": 20,
+              "reps": 8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

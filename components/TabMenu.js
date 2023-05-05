@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, MaterialCommunityIcons, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import React, { useState, useEffect } from 'react';
 import ExercisesView from './ExercisesView/ExercisesView';
-import HistoryView from './HistoryView';
+import HistoryView from './History/HistoryView';
 import ProfileView from './Profile/ProfileView';
 import StartWorkoutView from './StartWorkoutView/StartWorkoutView';
 import AsyncStorage from '@react-native-async-storage/async-storage';

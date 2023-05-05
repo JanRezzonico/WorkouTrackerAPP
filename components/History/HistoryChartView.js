@@ -2,7 +2,7 @@ import { color } from '@rneui/themed/dist/config';
 import React from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
 import { Chart, Line, Area, HorizontalAxis, VerticalAxis, Tooltip } from 'react-native-responsive-linechart';
-import colors from '../assets/style/colors';
+import colors from '../../assets/style/colors';
 //#region const
 const normalMargin = Dimensions.get('window').height * 0.02;
 const buttonWidth = Dimensions.get('window').width * 0.5;
@@ -45,7 +45,7 @@ function setXAxis(type) {
     }
 }
 
-function HistoryChartView(props) {
+function HistoryChartView({sessions, setSessions}) {
     let maxDataX = Math.floor(Math.max(data[0].x, data[data.length - 1].x));
     let maxDataY = Math.floor(Math.max(data[0].y, data[data.length - 1].y));
 

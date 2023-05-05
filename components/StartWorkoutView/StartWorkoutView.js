@@ -10,110 +10,12 @@ import WTIconButton from "../wt/WTIconButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 
-const customTemplates = [
-    {
-        title: "Leg Day", exercises: [
-            {
-                name: "Squat", sets: [
-                    { weight: 50, reps: 12 },
-                    { weight: 60, reps: 10 },
-                    { weight: 70, reps: 8 },
-                ]
-            },
-            {
-                name: "Split Squats", sets: [
-                    { weight: 16, reps: 12 },
-                    { weight: 18, reps: 10 },
-                    { weight: 20, reps: 8 },
-                ]
-            },
-        ]
-    }
-];
-const sampleTemplates = [
-    {
-        title: "Chest", exercises: [
-            {
-                name: "Bench Press (Barbell)", sets: [
-                    { weight: 50, reps: 12 },
-                    { weight: 60, reps: 10 },
-                    { weight: 70, reps: 8 },
-                ]
-            },
-            {
-                name: "Bench Press (Dumbbell)", sets: [
-                    { weight: 16, reps: 12 },
-                    { weight: 18, reps: 10 },
-                    { weight: 20, reps: 8 },
-                ]
-            },
-            {
-                name: "Cable Cross (Cable)", sets: [
-                    { weight: 16, reps: 12 },
-                    { weight: 18, reps: 10 },
-                    { weight: 20, reps: 8 },
-                ]
-            },
-        ]
-    },
-    {
-        title: "Arms", exercises: [
-            {
-                name: "Bicep Curl (Barbell)", sets: [
-                    { weight: 50, reps: 12 },
-                    { weight: 60, reps: 10 },
-                    { weight: 70, reps: 8 },
-                ]
-            },
-            {
-                name: "Bicep Curl (Dumbbell)", sets: [
-                    { weight: 16, reps: 12 },
-                    { weight: 18, reps: 10 },
-                    { weight: 20, reps: 8 },
-                ]
-            },
-            {
-                name: "Skullcrusher (Dumbbell)", sets: [
-                    { weight: 16, reps: 12 },
-                    { weight: 18, reps: 10 },
-                    { weight: 20, reps: 8 },
-                ]
-            },
-        ]
-    },
-    {
-        title: "Back", exercises: [
-            {
-                name: "Bicep Curl (Barbell)", sets: [
-                    { weight: 50, reps: 12 },
-                    { weight: 60, reps: 10 },
-                    { weight: 70, reps: 8 },
-                ]
-            },
-            {
-                name: "Bicep Curl (Dumbbell)", sets: [
-                    { weight: 16, reps: 12 },
-                    { weight: 18, reps: 10 },
-                    { weight: 20, reps: 8 },
-                ]
-            },
-            {
-                name: "Skullcrusher (Dumbbell)", sets: [
-                    { weight: 16, reps: 12 },
-                    { weight: 18, reps: 10 },
-                    { weight: 20, reps: 8 },
-                ]
-            },
-        ]
-    }
-];
+const defaultTemplates = require("../../assets/json/defaultTemplates").templates;
 
 const normalMargin = Dimensions.get('window').height * 0.015;
 const cardW = Dimensions.get('window').width * 0.9;
 const normalFont = Dimensions.get('window').width * 0.034;
 const subTitleFont = Dimensions.get('window').width * 0.045;
-//let templates = [];
-
 
 function StartWorkoutView(props) {
     const [templates, setTemplates] = useState([]);
@@ -122,14 +24,11 @@ function StartWorkoutView(props) {
         const loadCustomTemplates = async () => {
             value = await AsyncStorage.getItem('templates');
             value = JSON.parse(value);
-            console.log(value);
             displayCustomTemplates(value);
         }
         const displayCustomTemplates = (value) => {
             if (value !== null) {
                 setTemplates(value);
-                //console.log(templates);
-                // console.log(customTemplates);
             }
         }
         loadCustomTemplates();
@@ -179,26 +78,33 @@ const HeaderComponent = ({ templates, setTemplates }) => {
         setWorkoutName(workoutName);
     };
 
-    // this function save the created templates in to the device
+    /* 
+        this function save the created templates in to the device 
+        and update the custom templates's list in the current view
+    */
     const saveTemplate = () => {
+        //newTemplate is a object that contains a template
         var newTemplate = {exercises: [], title: workoutName};
-        var counter = 0;
-        
+
         exList.forEach((ex) => {
-            //newTemplate.exercises[counter].name = ex.selectedOption;
+            //insert exercises into a temporary object
             var temp = { name: ex.selectedOption, sets: [] };
+
             exProp.forEach((prop) => {
+                //insert prop (kg, rep) into the sets array of the temp object
                 if (ex.id === prop.exId) {
-                    //newTemplate.exercises[counter].sets.push(prop);
                     temp.sets.push(prop);
                 }
             })
+
+            //insert the temp object into the exercises array
             newTemplate.exercises.push(temp);
-            counter++;
         })
-        //console.log(newTemplate);
+
         let listTemplate = [...templates,newTemplate]
+        //set the templates usestate with the new template
         setTemplates(listTemplate);
+        //save the new template in to the device
         AsyncStorage.setItem('templates',JSON.stringify(listTemplate));
     };
     return (
@@ -281,7 +187,7 @@ const footerComponent = () => {
             <View style={styles.contents}>
                 <Text style={styles.subtitle}>Sample Templates</Text>
                 <FlatList
-                    data={sampleTemplates}
+                    data={defaultTemplates}
                     renderItem={(e) => {
                         return (
                             <TemplateItemView template={e} />

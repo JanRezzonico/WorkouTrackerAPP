@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Text, View, FlatList, ScrollView } from "react-native";
 import HistoryListItem from "./HistoryListItem";
-import DB from "../api/api";
+import DB from "../../api/api";
 
-function HistoryListView(props) {
-    const [sessions, setSessions] = useState([]);
+function HistoryListView({sessions, setSessions}) {
+    
     // After rendering the components get the session data
     useEffect(() => {
         async function fetchData() {

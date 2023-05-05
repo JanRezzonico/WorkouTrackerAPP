@@ -22,7 +22,7 @@ function CreateWorkoutModelView({onNameChange, onExListChange, onExPropChange}) 
     const [setId, setSetId] = useState(0);
 
     const [modalVisible, setModalVisible] = useState(false);
-    
+
     // Templates's name
     const [name, setName] = useState('New Workout');
 
@@ -129,6 +129,13 @@ function CreateWorkoutModelView({onNameChange, onExListChange, onExPropChange}) 
                                                     placeholder='kg'
                                                     placeholderTextColor={'#aaa'}
                                                     keyboardType='numeric'
+                                                    onChangeText={()=>{
+                                                        // setExProp(prevExProp => prevExProp.map(prop =>{
+                                                        //     if(prop.exId === item.id){
+                                                        //         return {...prop,kg:2}
+                                                        //     }
+                                                        // }))
+                                                    }}
                                                 />
                                                 <TextInput
                                                     style={styles.exProp}
@@ -136,6 +143,13 @@ function CreateWorkoutModelView({onNameChange, onExListChange, onExPropChange}) 
                                                     placeholder='reps'
                                                     placeholderTextColor={'#aaa'}
                                                     keyboardType='numeric'
+                                                    onChangeText={()=>{
+                                                        // setExProp(prevExProp => prevExProp.map(prop =>{
+                                                        //     if(prop.exId === item.id){
+                                                        //         return {...prop,rep:2}
+                                                        //     }
+                                                        // }))
+                                                    }}
                                                 />
                                             </View>
                                         );

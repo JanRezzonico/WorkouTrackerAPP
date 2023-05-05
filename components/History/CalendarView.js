@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet, Image, Dimensions, SafeAreaView, ScrollView, StatusBar, Button, Alert, TouchableOpacity,Modal} from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import {CalendarList, LocaleConfig} from 'react-native-calendars';
-import colors from "../assets/style/colors";
+import colors from "../../assets/style/colors";
 
 LocaleConfig.locales['en'] = {
   monthNames: [
@@ -29,7 +29,7 @@ const highlightColor = '#8c9596';
 const fontColor = '#F9F9F9';
 const blue = '#35A7FF'
 
-function CalendarView(props) {
+function CalendarView({sessions, setSessions}) {
     return (
         <View>
             {/*

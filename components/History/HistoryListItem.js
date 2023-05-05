@@ -1,9 +1,9 @@
 import { Text, View, StyleSheet, FlatList, Dimensions, Pressable, Modal, TouchableOpacity } from "react-native";
 import { useState } from "react";
-import ExerciseModalView from "./ExerciseModalView";
-import WTHorizontalLine from "./wt/WTHorizontalLine";
-import WTButton from "./wt/WTButton";
-import colors from "../assets/style/colors";
+import ExerciseModalView from "../ExerciseModalView";
+import WTHorizontalLine from "../wt/WTHorizontalLine";
+import WTButton from "../wt/WTButton";
+import colors from "../../assets/style/colors";
 
 
 const normalMargin = Dimensions.get('window').height * 0.02;
