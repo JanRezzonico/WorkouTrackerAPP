@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, TouchableOpacity, Text, View, StyleSheet, Dimensions, SafeAreaView, ScrollView } from 'react-native';
 import colors from '../assets/style/colors';
-import WTButton from './wt/WTButton';
 
 const ExercisePicker = ({ options, selectedOption, onSelect }) => {
     const [showOptions, setShowOptions] = useState(false);
@@ -11,7 +10,10 @@ const ExercisePicker = ({ options, selectedOption, onSelect }) => {
             <TouchableOpacity onPress={() => setShowOptions(true)}>
                 <Text style={styles.selected}>{selectedOption}</Text>
             </TouchableOpacity>
-            {/* <WTButton text={selectedOption} onPress={() => setShowOptions(true)} /> */}
+            {/*
+                the component modal is used to show a pop-up when a user tries to add a custom template
+                this specific modal shows the list of available exercises
+            */}
             <Modal
                 visible={showOptions}
                 animationType="slide"

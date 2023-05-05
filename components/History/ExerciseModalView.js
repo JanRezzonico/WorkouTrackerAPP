@@ -1,5 +1,5 @@
 import { Text, View, FlatList, ScrollView, StyleSheet, Dimensions, SafeAreaView } from "react-native";
-import WTHorizontalLine from "./wt/WTHorizontalLine";
+import WTHorizontalLine from "../wt/WTHorizontalLine";
 function ExerciseModalView(props) {
     const start_date = new Date(props.start_date);
     const end_date = new Date(props.end_date);
@@ -18,7 +18,7 @@ function ExerciseModalView(props) {
             <Text style={styles.mainTitle}>{props.name}</Text>
                 <View style={styles.horizontalContainer}>
                     <Text style={styles.text}>{day}</Text>
-                    <Text style={styles.text}>{duration} min</Text>
+                    <Text style={styles.text}>{duration ? duration +" min" : ""} min</Text>
                     <Text style={styles.text}>{totalWeight} kg</Text>
                 </View>
                 <WTHorizontalLine color="white"/>

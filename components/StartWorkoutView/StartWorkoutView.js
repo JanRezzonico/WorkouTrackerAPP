@@ -1,7 +1,5 @@
-import { Text, View, StyleSheet, Dimensions, SafeAreaView, ScrollView, TouchableOpacity, FlatList, SectionList, Modal } from "react-native";
+import { Text, View, StyleSheet, Dimensions, SafeAreaView, TouchableOpacity, FlatList, Modal } from "react-native";
 import { useState } from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-//import TemplateItemView from "./components/TemplateItemView";
 import CreateWorkoutModelView from "../CreateWorkoutModelView";
 import StartedWorkout from "./StartedWorkout";
 import StartedWorkoutView from "./StartedWorkoutView";
@@ -11,126 +9,29 @@ import WTIconButton from "../wt/WTIconButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 
-// const customTemplates = [
-//     {
-//         title: "Leg Day", exercises: [
-//             {
-//                 name: "Squat", sets: [
-//                     { weight: 50, reps: 12 },
-//                     { weight: 60, reps: 10 },
-//                     { weight: 70, reps: 8 },
-//                 ]
-//             },
-//             {
-//                 name: "Split Squats", sets: [
-//                     { weight: 16, reps: 12 },
-//                     { weight: 18, reps: 10 },
-//                     { weight: 20, reps: 8 },
-//                 ]
-//             },
-//         ]
-//     }
-// ];
-const sampleTemplates = [
-    {
-        name: "Chest", exercises: [
-            {
-                name: "Bench Press (Barbell)", sets: [
-                    { weight: 50, reps: 12 },
-                    { weight: 60, reps: 10 },
-                    { weight: 70, reps: 8 },
-                ]
-            },
-            {
-                name: "Bench Press (Dumbbell)", sets: [
-                    { weight: 16, reps: 12 },
-                    { weight: 18, reps: 10 },
-                    { weight: 20, reps: 8 },
-                ]
-            },
-            {
-                name: "Cable Cross (Cable)", sets: [
-                    { weight: 16, reps: 12 },
-                    { weight: 18, reps: 10 },
-                    { weight: 20, reps: 8 },
-                ]
-            },
-        ]
-    },
-    {
-        name: "Arms", exercises: [
-            {
-                name: "Bicep Curl (Barbell)", sets: [
-                    { weight: 50, reps: 12 },
-                    { weight: 60, reps: 10 },
-                    { weight: 70, reps: 8 },
-                ]
-            },
-            {
-                name: "Bicep Curl (Dumbbell)", sets: [
-                    { weight: 16, reps: 12 },
-                    { weight: 18, reps: 10 },
-                    { weight: 20, reps: 8 },
-                ]
-            },
-            {
-                name: "Skullcrusher (Dumbbell)", sets: [
-                    { weight: 16, reps: 12 },
-                    { weight: 18, reps: 10 },
-                    { weight: 20, reps: 8 },
-                ]
-            },
-        ]
-    },
-    {
-        name: "Back", exercises: [
-            {
-                name: "Bicep Curl (Barbell)", sets: [
-                    { weight: 50, reps: 12 },
-                    { weight: 60, reps: 10 },
-                    { weight: 70, reps: 8 },
-                ]
-            },
-            {
-                name: "Bicep Curl (Dumbbell)", sets: [
-                    { weight: 16, reps: 12 },
-                    { weight: 18, reps: 10 },
-                    { weight: 20, reps: 8 },
-                ]
-            },
-            {
-                name: "Skullcrusher (Dumbbell)", sets: [
-                    { weight: 16, reps: 12 },
-                    { weight: 18, reps: 10 },
-                    { weight: 20, reps: 8 },
-                ]
-            },
-        ]
-    }
-];
+//Require JSON with the default templates 
+const defaultTemplates = require("../../assets/json/defaultTemplates").templates;
 
 const normalMargin = Dimensions.get('window').height * 0.015;
 const cardW = Dimensions.get('window').width * 0.9;
 const normalFont = Dimensions.get('window').width * 0.034;
 const subTitleFont = Dimensions.get('window').width * 0.045;
-//let templates = [];
-
 
 function StartWorkoutView(props) {
     const [templates, setTemplates] = useState([]);
+    //Every time the application renders the view, update the custom templates list
     useEffect(() => {
         var value = null;
+        //get the custom templates from the device
         const loadCustomTemplates = async () => {
             value = await AsyncStorage.getItem('templates');
             value = JSON.parse(value);
-            console.log(value);
             displayCustomTemplates(value);
         }
+        //set the useState
         const displayCustomTemplates = (value) => {
             if (value !== null) {
                 setTemplates(value);
-                //console.log(templates);
-                // console.log(customTemplates);
             }
         }
         loadCustomTemplates();
@@ -147,7 +48,7 @@ function StartWorkoutView(props) {
                             );
                         }}
                         ListHeaderComponent={<HeaderComponent templates={templates} setTemplates={setTemplates} />}
-                        ListFooterComponent={footerComponent}
+                        ListFooterComponent={<FooterComponent/>}
                     />
                 }
             </SafeAreaView>
@@ -167,35 +68,40 @@ const HeaderComponent = ({ templates, setTemplates }) => {
     const [workoutModalVisible, setWorkoutModalVisible] = useState(false);
     const [workout, setWorkout] = useState(null);
 
-
+    //Get change from new template form
     const handleExListChange = (exList) => {
         setExList(exList);
     };
-
+    //Get change from new template form
     const handleExPropChange = (exProp) => {
         setExProp(exProp);
     };
-
+    //Get change from new template form
     const handleNameChange = (workoutName) => {
         setWorkoutName(workoutName);
     };
 
-    // this function save the created templates in to the device
+    /* 
+        this function save the created templates in to the device 
+        and update the custom templates's list in the current view
+    */
     const saveTemplate = () => {
-        var newTemplate = { exercises: [], name: workoutName };
-        var counter = 0;
+        //newTemplate is a object that contains a template
+        var newTemplate = {exercises: [], title: workoutName};
 
         exList.forEach((ex) => {
-            //newTemplate.exercises[counter].name = ex.selectedOption;
+            //insert exercises into a temporary object
             var temp = { name: ex.selectedOption, sets: [] };
+
             exProp.forEach((prop) => {
+                //insert prop (kg, rep) into the sets array of the temp object
                 if (ex.id === prop.exId) {
-                    //newTemplate.exercises[counter].sets.push(prop);
                     temp.sets.push(prop);
                 }
             })
+
+            //insert the temp object into the exercises array
             newTemplate.exercises.push(temp);
-            counter++;
         })
         //console.log(newTemplate);
         let listTemplate = [...templates, newTemplate]
@@ -207,14 +113,16 @@ const HeaderComponent = ({ templates, setTemplates }) => {
             <View style={styles.header}>
                 <Text style={styles.subtitle}>Quick Start</Text>
                 <WTButton
-                    onPress={
-                        () => {
+                    onPress={() => {
                             setWorkoutModalVisible(true);
-                        }
-                    }
+                    }}
                     text={"Start Empty Workout"}
                 />
             </View>
+            {/*
+                the component modal is used to show a pop-up when a user tries to add a custom template
+                this specific modal shows the view to start an empty workout
+            */}
             <Modal
                 animationType='fade'
                 visible={workoutModalVisible}
@@ -243,25 +151,14 @@ const HeaderComponent = ({ templates, setTemplates }) => {
                         {/* Pop-up content*/}
                         <View style={styles.popUpCenter}>
                             <View style={styles.popUp}>
-                                <CreateWorkoutModelView weight={70} height={1.70} onNameChange={handleNameChange} onExListChange={handleExListChange} onExPropChange={handleExPropChange} />
-                                {/* Close pop-up button */}
-                                <View style={styles.popUpBtnContainer}>
-                                    <TouchableOpacity
-                                        style={[styles.popUpButton, { backgroundColor: '#80898b' }]}
-                                        onPress={() => { setModalVisible(!modalVisible); }}
-                                    >
-                                        <Text style={styles.appButtonText}>Close</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        style={styles.popUpButton}
-                                        onPress={() => {
-                                            saveTemplate();
-                                            setModalVisible(!modalVisible);
-                                        }}
-                                    >
-                                        <Text style={styles.appButtonText}>Create</Text>
-                                    </TouchableOpacity>
-                                </View>
+                                <CreateWorkoutModelView 
+                                    weight={70} height={1.70} 
+                                    onNameChange={handleNameChange} 
+                                    onExListChange={handleExListChange} 
+                                    onExPropChange={handleExPropChange} 
+                                    saveTemplate={saveTemplate}
+                                    onRequestClose={() => { setModalVisible(!modalVisible); }}
+                                />
                             </View>
                         </View>
                     </Modal>
@@ -273,16 +170,16 @@ const HeaderComponent = ({ templates, setTemplates }) => {
 };
 
 /*
-    The footerComponent display the Sample template section
-    Is a component of the FlatList in the main function
+    The footerComponent is part of the FlatList in the main function
+    this specific footer display the Sample template section
 */
-const footerComponent = () => {
+const FooterComponent = () => {
     return (
         <View style={styles.container}>
             <View style={styles.contents}>
                 <Text style={styles.subtitle}>Sample Templates</Text>
                 <FlatList
-                    data={sampleTemplates}
+                    data={defaultTemplates}
                     renderItem={(e) => {
                         return (
                             <TemplateItemView template={e} />

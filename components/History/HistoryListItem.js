@@ -1,18 +1,21 @@
 import { Text, View, StyleSheet, FlatList, Dimensions, Pressable, Modal, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import ExerciseModalView from "./ExerciseModalView";
-import WTHorizontalLine from "./wt/WTHorizontalLine";
-import WTButton from "./wt/WTButton";
-import colors from "../assets/style/colors";
+import WTHorizontalLine from "../wt/WTHorizontalLine";
+import WTButton from "../wt/WTButton";
+import colors from "../../assets/style/colors";
 
 
 const normalMargin = Dimensions.get('window').height * 0.02;
 
 
 function HistoryListItem(props) {
+    console.log("aaaa");
+    console.log(props);
     const start_date = new Date(props.start_date);
     const end_date = new Date(props.end_date);
     const duration = Math.trunc((end_date - start_date) / (1000 * 60)*10)/10;
+    console.log(duration);
     const day = start_date.toLocaleDateString();
     let totalWeight = 0;
     // Calculate total weight
@@ -32,7 +35,9 @@ function HistoryListItem(props) {
                 <Text style={styles.textTitle}>{props.name}</Text>
                 <View style={styles.horizontalContainer}>
                     <Text style={styles.text}>{day}</Text>
-                    <Text style={styles.text}>{duration} min</Text>
+                    <Text style={styles.text}>
+                        {duration ? duration +" min" : ""}
+                    </Text>
                     <Text style={styles.text}>{totalWeight} kg</Text>
                 </View>
                 <WTHorizontalLine color="white"/>

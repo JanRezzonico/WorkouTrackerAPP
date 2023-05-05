@@ -3,10 +3,10 @@ import { useState } from 'react';
 import HistoryListView from "./HistoryListView";
 import HistoryChartView from "./HistoryChartView";
 import CalendarView from "./CalendarView";
-import DB from '../api/api';
-import colors from '../assets/style/colors';
-import WTButton from './wt/WTButton';
-import WTIconButton from './wt/WTIconButton';
+import DB from '../../api/api';
+import colors from '../../assets/style/colors';
+import WTButton from '../wt/WTButton';
+import WTIconButton from '../wt/WTIconButton';
 
 const normalMargin = Dimensions.get('window').height * 0.02;
 
@@ -14,13 +14,14 @@ const normalMargin = Dimensions.get('window').height * 0.02;
 function HistoryView(props) {
     const [modalVisible, setModalVisible] = useState(false);
     const [page, setPage] = useState("");
+    const [sessions, setSessions] = useState([]);
 
     // return the correct page based on which button was pressed
     function getPage() {
         if (page === "Calendar") {
-            return <CalendarView />;
+            return <CalendarView sessions={sessions} setSessions={setSessions}/>;
         } else if (page === "Chart") {
-            return <HistoryChartView />;
+            return <HistoryChartView sessions={sessions} setSessions={setSessions}/>;
         }
     }
 
@@ -47,8 +48,11 @@ function HistoryView(props) {
                     size={20}
                 />
             </View>
-            <HistoryListView />
-
+            <HistoryListView sessions={sessions} setSessions={setSessions}/>
+            {/*
+                the component modal is used to show a pop-up when a user tries to add a custom template
+                this specific modal shows the ChartView or the CalendarView based on wich button was pressed
+            */}
             <Modal
                 style="padding: 2px;"
                 animationType='fade'
