@@ -2,6 +2,7 @@ import { Text, View, StyleSheet, Dimensions, SafeAreaView, TouchableOpacity, Fla
 import { useState } from 'react';
 import CreateWorkoutModelView from "../CreateWorkoutModelView";
 import StartedWorkout from "./StartedWorkout";
+import StartedWorkoutView from "./StartedWorkoutView";
 import WTButton from "../wt/WTButton";
 import colors from "../../assets/style/colors";
 import WTIconButton from "../wt/WTIconButton";
@@ -102,12 +103,10 @@ const HeaderComponent = ({ templates, setTemplates }) => {
             //insert the temp object into the exercises array
             newTemplate.exercises.push(temp);
         })
-
-        let listTemplate = [...templates,newTemplate]
-        //set the templates usestate with the new template
+        //console.log(newTemplate);
+        let listTemplate = [...templates, newTemplate]
         setTemplates(listTemplate);
-        //save the new template in to the device
-        AsyncStorage.setItem('templates',JSON.stringify(listTemplate));
+        AsyncStorage.setItem('templates', JSON.stringify(listTemplate));
     };
     return (
         <View style={styles.container}>
@@ -132,7 +131,7 @@ const HeaderComponent = ({ templates, setTemplates }) => {
                     setWorkoutModalVisible(!workoutModalVisible);
                 }}
             >
-                <StartedWorkout workout={workout} setWorkout={setWorkout} onRequestClose={() => { setWorkoutModalVisible(!workoutModalVisible) }} />
+                <StartedWorkoutView workout={workout} setWorkout={setWorkout} toggleModal={() => { setWorkoutModalVisible(!workoutModalVisible) }} />
             </Modal>
             <View style={styles.contents}>
                 <View style={styles.addTemplate}>
@@ -198,13 +197,13 @@ const FooterComponent = () => {
     When a user clicks on a template a modal will open and show the view to start the workout
 */
 const TemplateItemView = (props) => {
-    const [modal2Visible, setModal2Visible] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
 
     return (
-        <TouchableOpacity onPress={() => setModal2Visible(true)} style={styles.woTemplate}>
-            <Text style={styles.templateTitle}>{props.template.item.title}</Text>
+        <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.woTemplate}>
+            <Text style={styles.templateTitle}>{props.template.item.name}</Text>
 
-            <WOProgressModal modalVisible={modal2Visible} setModalVisible={setModal2Visible} onclose={() => setModal2Visible(!modal2Visible)} workout={props.template.item} />
+            <WOProgressModal modalVisible={modalVisible} setModalVisible={setModalVisible} onclose={() => setModalVisible(false)} workout={props.template.item} />
 
             <FlatList // List of Exercises like 3xSquat, 3xCurl
                 data={props.template.item.exercises}
@@ -219,6 +218,12 @@ const TemplateItemView = (props) => {
 }
 
 const WOProgressModal = ({ setModalVisible, modalVisible, onClose, workout }) => {
+    const [workoutState, setWorkout] = useState({ name: workout.name, exercises: workout.exercises });
+
+    const toggleModal = () => {
+        setModalVisible(!modalVisible);
+    }
+
     return (
         <Modal
             visible={modalVisible}
@@ -230,27 +235,8 @@ const WOProgressModal = ({ setModalVisible, modalVisible, onClose, workout }) =>
             <View style={styles.popUpCenter}>
                 <View style={styles.popUp}>
                     {/** insert json here.. */}
-                    <StartedWorkout workout={workout} />
+                    <StartedWorkoutView workout={workout} setWorkout={setWorkout} toggleModal={toggleModal} />
                     {/* Close pop-up button */}
-                    <View style={styles.popUpBtnContainer}>
-                        <TouchableOpacity
-                            style={[styles.popUpButton, { backgroundColor: '#80898b' }]}
-                            onPress={() => {
-                                setModalVisible(!modalVisible)
-                            }}
-                        >
-                            <Text style={styles.appButtonText}>Close</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.popUpButton}
-                            onPress={() => {
-                                setModalVisible(!modalVisible)
-
-                            }}
-                        >
-                            <Text style={styles.appButtonText}>Create</Text>
-                        </TouchableOpacity>
-                    </View>
                 </View>
             </View>
         </Modal>

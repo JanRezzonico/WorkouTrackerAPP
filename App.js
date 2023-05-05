@@ -42,7 +42,7 @@ function App() {
                     // Error removing data
                 }
             };
-            removeData();
+            //removeData();
         }
         setUserId();
         changeScreenOrientation();
